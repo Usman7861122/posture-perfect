@@ -1,0 +1,316 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from './react/Reveal';
+import DecompressionDiagram from './react/DecompressionDiagram';
+import Testimonials from './react/Testimonials';
+import FaqAccordion from './react/FaqAccordion';
+import LocationsMap from './react/LocationsMap';
+import { site } from '../data/site';
+import { img } from '../data/images';
+import type { ServiceDetail } from '../data/services';
+import { treatments as navT, conditions as navC, href as navHref } from '../data/nav';
+
+interface Props {
+  service: ServiceDetail;
+  location?: (typeof site.locations)[number];
+}
+const { service: s, location: loc } = Astro.props;
+
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+const isCond = s.kind === 'condition';
+const root = isCond ? '/condition-we-treat/' : '/treatments/';
+const rootLabel = isCond ? 'Conditions' : 'Treatments';
+const base = `${root}${s.slug}/`;
+const relatedPool = isCond ? [...navT.core, ...navT.more] : navC.flatMap((g) => g.items);
+const relatedLinks = s.related.map((t) => { const m = relatedPool.find((i) => i.title === t); return { t, h: m ? navHref(m) : root }; });
+const badge = s.badge ?? { big: 'Non-surgical', small: 'Gentle · Painless · Supervised' };
+const local = loc ? s.local[loc.slug] : undefined;
+const h1 = loc ? `${s.title} in ${loc.city}, TX` : s.title;
+const metaTitle = loc ? `${s.title} in ${loc.city}, TX (${loc.name} Office)` : `${s.title} in Dallas & McKinney, TX`;
+const metaDesc = loc
+  ? `${s.title} at our ${loc.name} office, ${loc.street}, ${loc.cityLine}. ${s.tagline} Call ${site.phone}.`
+  : `${s.title} at Posture Perfect Wellness Center. ${s.tagline} Offices in Dallas and McKinney, TX.`;
+const other = loc ? site.locations.find((l) => l.id !== loc.id)! : undefined;
+const pageUrl = new URL(loc ? `${base}${loc.slug}/` : base, Astro.site).toString();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalWebPage',
+      name: metaTitle,
+      description: metaDesc,
+      url: pageUrl,
+      about: { '@type': isCond ? 'MedicalCondition' : 'MedicalTherapy', name: s.title },
+      ...(loc && {
+        mainEntityOfPage: {
+          '@type': 'MedicalClinic',
+          name: `${site.name} – ${loc.name}`,
+          telephone: site.phone,
+          address: { '@type': 'PostalAddress', streetAddress: loc.street, addressLocality: loc.city, addressRegion: 'TX' },
+        },
+      }),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 2, name: s.title, item: new URL(base, Astro.site).toString() },
+        ...(loc ? [{ '@type': 'ListItem', position: 3, name: loc.city, item: pageUrl }] : []),
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: s.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+};
+---
+
+<BaseLayout title={metaTitle} description={metaDesc} jsonLd={jsonLd}>
+  <!-- HERO -->
+  <section class="on-dark relative isolate overflow-hidden bg-forest-950 pb-0 pt-36 text-ivory-50 md:pt-44">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20" style={`background-image: ${bg(s.heroImage)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/95 via-forest-950/75 to-forest-950/40"></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-forest-950 via-transparent to-transparent"></div>
+
+    <div class="container-page">
+      <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+        <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+          <li><a href="/" class="hover:text-gold-300">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href={root} class="hover:text-gold-300">{rootLabel}</a></li>
+          <li aria-hidden="true">/</li>
+          {loc ? (
+            <>
+              <li><a href={base} class="hover:text-gold-300">{s.title}</a></li>
+              <li aria-hidden="true">/</li>
+              <li class="text-gold-300" aria-current="page">{loc.city}</li>
+            </>
+          ) : (
+            <li class="text-gold-300" aria-current="page">{s.title}</li>
+          )}
+        </ol>
+      </nav>
+
+      {loc && (
+        <p class="mt-10 inline-flex items-center gap-3 bg-gold-500 px-4 py-2 text-xs font-medium uppercase tracking-[0.2em] text-forest-950">
+          <span aria-hidden="true" class="h-2 w-2 rotate-45 bg-forest-950"></span>
+          {loc.name} Office
+        </p>
+      )}
+
+      <h1 class:list={['max-w-3xl text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-ivory-50', loc ? 'mt-5' : 'mt-10']}>{h1}</h1>
+      <span aria-hidden="true" class="my-7 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+      <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">{local ? local.intro : s.tagline}</p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </div>
+
+    <!-- facts / office strip -->
+    <div class="mt-16 border-t border-ivory-50/15 bg-forest-950/60 backdrop-blur-md">
+      {loc ? (
+        <div class="container-page flex items-start gap-4 py-6 sm:items-center">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="mt-1 h-6 w-6 shrink-0 fill-none stroke-gold-400 sm:mt-0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0114 0C19 14.800 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+          <p class="text-base leading-relaxed text-ivory-100/85 sm:text-lg">Patients are welcome from across {loc.nearby}.</p>
+        </div>
+      ) : (
+        <div class="container-page grid grid-cols-2 gap-y-4 py-6 lg:grid-cols-4">
+          {s.facts.map((f) => (
+            <p class="text-sm"><span class="block font-serif text-2xl text-gold-300">{f.v}</span><span class="text-ivory-200/75">{f.k}</span></p>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- WHAT IS IT -->
+  <section class="section">
+    <div class="container-page grid items-stretch gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">{isCond ? "About the condition" : "About the treatment"}</p>
+        <h2 class="display mt-5 text-forest-900">{s.whatTitle}</h2>
+        {s.what.map((p, i) => <p class:list={[i === 0 ? 'lead mt-7' : 'mt-5 text-muted']}>{p}</p>)}
+        {loc && (
+          <ul class="mt-8 space-y-3 border-t border-forest-900/15 pt-8 text-forest-900">
+            {local!.points.map((t) => (
+              <li class="flex items-start gap-3">
+                <span aria-hidden="true" class="mt-2 block h-2 w-2 shrink-0 rotate-45 bg-gold-500"></span>{t}
+              </li>
+            ))}
+          </ul>
+        )}
+        <div class="mt-9 flex flex-wrap gap-2">
+          {relatedLinks.map((r) => <a href={r.h} class="bg-ivory-200 px-4 py-2 text-sm text-forest-900 transition-colors hover:bg-forest-900 hover:text-ivory-50">{r.t}</a>)}
+        </div>
+      </Reveal>
+      <Reveal client:visible className="relative min-h-[380px]">
+        <div class="absolute inset-0 rounded-sm bg-forest-800 bg-cover bg-center" style={`background-image: ${bg(s.sideImage)}`} role="img" aria-label={`${s.title} at Posture Perfect Wellness Center`}></div>
+        <div class="absolute bottom-0 left-0 bg-forest-900 px-6 py-5 text-ivory-50">
+          <span class="block font-serif text-3xl text-gold-300">{badge.big}</span>
+          <span class="text-xs uppercase tracking-[0.2em]">{badge.small}</span>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="on-dark grain relative overflow-hidden bg-forest-900 py-16 text-ivory-50 md:py-24">
+    <div class="container-page grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      {s.diagram ? (
+        <DecompressionDiagram client:visible />
+      ) : (
+        <Reveal client:visible className="relative min-h-[320px] lg:min-h-[420px]">
+          <div class="absolute inset-0 rounded-sm bg-forest-800 bg-cover bg-center" style={`background-image: ${bg(s.howImage ?? s.sideImage)}`} role="img" aria-label={s.title}></div>
+          <div aria-hidden="true" class="absolute -bottom-3 -right-3 -z-10 h-full w-full rounded-sm border border-gold-500/60"></div>
+        </Reveal>
+      )}
+      <div>
+        <Reveal client:visible>
+          <p class="eyebrow">{isCond ? "Why it happens" : "The science, simply"}</p>
+          <h2 class="display mt-5 !text-ivory-50">{s.howTitle}</h2>
+        </Reveal>
+        <ol class="mt-10 grid gap-px bg-ivory-50/15 sm:grid-cols-2">
+          {s.how.map((h, i) => (
+            <li class="group bg-forest-900 p-6 transition-colors duration-500 hover:bg-forest-800">
+              <span class="font-serif text-4xl text-gold-400/70 transition-colors group-hover:text-gold-300">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-3 text-2xl text-ivory-50">{h.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ivory-200/80">{h.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CANDIDATES -->
+  <section class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="max-w-3xl">
+        <p class="eyebrow">{isCond ? "Know the signs" : "Is it right for you?"}</p>
+        <h2 class="display mt-5 text-forest-900">{s.candidatesTitle}</h2>
+        <p class="lead mt-6">{s.candidatesNote}</p>
+      </Reveal>
+      <Reveal client:visible className="mt-12">
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {s.candidates.map((c, i) => (
+            <li class="group relative overflow-hidden border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(7,26,21,0.5)]">
+              <span class="font-serif text-5xl text-gold-500/50">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-4 text-2xl leading-tight text-forest-900">{c.title}</h3>
+              <p class="mt-3 text-sm text-muted">{c.text}</p>
+              <span aria-hidden="true" class="absolute bottom-0 left-0 h-0.5 w-0 bg-gold-500 transition-all duration-700 group-hover:w-full"></span>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">Your journey</p>
+        <h2 class="display mt-5 text-forest-900">{s.expectTitle}</h2>
+        {local && <p class="lead mt-6">{local.visitText}</p>}
+        <a href="/contact" class="btn-dark btn-book mt-9">{local ? local.cta : 'Schedule an Evaluation'}</a>
+      </Reveal>
+      <Reveal client:visible>
+        <ol class="relative space-y-10 border-l border-gold-500/50 pl-8 sm:pl-10">
+          {s.expect.map((e, i) => (
+            <li class="relative">
+              <span aria-hidden="true" class="absolute -left-[2.55rem] top-1 flex h-9 w-9 items-center justify-center bg-forest-900 font-serif text-lg text-gold-300 sm:-left-[3.05rem]">{i + 1}</span>
+              <h3 class="text-2xl text-forest-900 sm:text-3xl">{e.title}</h3>
+              <p class="mt-2 max-w-xl text-muted">{e.text}</p>
+            </li>
+          ))}
+        </ol>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.reviews)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-forest-950/70 via-forest-950/40 to-forest-950/70"></div>
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-10 max-w-3xl text-center">
+        <p class="eyebrow">Patient reviews</p>
+        <h2 class="display mt-5 !text-ivory-50">Trusted by our <em class="gold-text">patients.</em></h2>
+      </Reveal>
+      <div class="mx-auto max-w-4xl rounded-sm border border-gold-500/50 bg-ivory-50/95 px-6 pb-8 pt-14 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm sm:px-12 md:pb-10">
+        <Testimonials client:visible />
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATIONS -->
+  <section id="locations" class="section">
+    <div class="container-page">
+      {loc ? (
+        <>
+          <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+            <p class="eyebrow">{local!.visitTitle}</p>
+            <h2 class="display mt-5 text-forest-900">Find the <em class="text-gold-600">{loc.name}</em> office.</h2>
+          </Reveal>
+          <LocationsMap client:visible only={loc.id} />
+          <p class="mt-8 text-center text-muted">
+            Prefer another office? <a href={`${base}${other!.slug}/`} class="text-forest-900 underline decoration-gold-500 underline-offset-4 hover:text-gold-700">{s.title} in {other!.city}</a>
+            · <a href={base} class="text-forest-900 underline decoration-gold-500 underline-offset-4 hover:text-gold-700">All locations</a>
+          </p>
+        </>
+      ) : (
+        <>
+          <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+            <p class="eyebrow">Our locations</p>
+            <h2 class="display mt-5 text-forest-900">Choose your <em class="text-gold-600">office.</em></h2>
+            <p class="lead mt-6">{s.title} is available at both offices. Pick the one closest to you.</p>
+          </Reveal>
+          <ul class="grid gap-5 md:grid-cols-2">
+            {site.locations.map((l) => (
+              <li>
+                <a href={`${base}${l.slug}/`} class="group relative block overflow-hidden border border-forest-900/15 bg-ivory-100 p-8 transition-all duration-500 hover:border-gold-500 hover:bg-forest-900 sm:p-10">
+                  <p class="text-xs uppercase tracking-[0.25em] text-gold-700 transition-colors group-hover:text-gold-300">{l.city}, TX</p>
+                  <h3 class="mt-3 text-3xl text-forest-900 transition-colors group-hover:text-ivory-50 sm:text-4xl">{l.name}</h3>
+                  <address class="mt-4 not-italic text-muted transition-colors group-hover:text-ivory-200/80">{l.street}<br />{l.cityLine}</address>
+                  <p class="mt-2 text-sm text-muted transition-colors group-hover:text-ivory-200/80">Mon, Wed, Thu 8–6 · Tue, Fri 8–2</p>
+                  <span class="mt-8 inline-flex min-h-11 items-center gap-3 text-sm font-medium text-forest-900 transition-colors group-hover:text-gold-300">
+                    {s.title} in {l.city} <span aria-hidden="true" class="transition-transform duration-500 group-hover:translate-x-2">→</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section bg-ivory-100">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">FAQs</p>
+        <h2 class="display mt-5 text-forest-900">Questions about <em class="text-gold-600">{s.title.toLowerCase()}.</em></h2>
+        <p class="lead mt-6">Need more help? Call <a href={site.phoneHref} class="text-forest-900 underline decoration-gold-500 underline-offset-4">{site.phone}</a>.</p>
+      </Reveal>
+      <FaqAccordion client:visible faqs={s.faqs} />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-900"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">{s.ctaHeading ?? 'Ready to feel better?'}</h2>
+      <p class="lead mt-6">{loc ? `Book your evaluation at our ${loc.name} office.` : 'Start with an evaluation and leave with a plan.'}</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

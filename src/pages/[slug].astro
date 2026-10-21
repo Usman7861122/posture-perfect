@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+import { legalDocs, legalUpdated } from '../data/legal';
+
+export function getStaticPaths() {
+  return legalDocs.map((d) => ({ params: { slug: d.slug }, props: { doc: d } }));
+}
+const { doc } = Astro.props;
+const id = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+---
+
+<BaseLayout title={doc.title} description={doc.desc}>
+  <section class="on-dark grain relative isolate overflow-hidden bg-forest-950 pb-14 pt-36 text-ivory-50 md:pb-20 md:pt-44">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(184,151,90,0.18),transparent_55%)]"></div>
+    <div class="container-page">
+      <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+        <ol class="flex items-center gap-x-2">
+          <li><a href="/" class="hover:text-gold-300">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-gold-300" aria-current="page">{doc.title}</li>
+        </ol>
+      </nav>
+      <h1 class="mt-10 max-w-3xl text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] text-ivory-50">{doc.title}</h1>
+      <span aria-hidden="true" class="my-6 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+      <p class="text-xs uppercase tracking-[0.2em] text-gold-300">Last updated {legalUpdated}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[260px_1fr] lg:gap-20">
+      <aside class="lg:sticky lg:top-28 lg:self-start">
+        <p class="eyebrow">Legal</p>
+        <ul class="mt-5 space-y-1 border-l border-gold-500/40">
+          {legalDocs.map((d) => (
+            <li>
+              <a href={`/${d.slug}/`} aria-current={d.slug === doc.slug ? 'page' : undefined} class:list={['-ml-px block border-l py-2 pl-5 text-sm transition-colors', d.slug === doc.slug ? 'border-gold-600 font-medium text-forest-900' : 'border-transparent text-muted hover:border-gold-500 hover:text-forest-900']}>{d.title}</a>
+            </li>
+          ))}
+        </ul>
+        <button type="button" data-cookie-settings class="mt-8 border border-forest-900/20 px-5 py-3 text-sm text-forest-900 transition-colors hover:border-gold-500">Cookie settings</button>
+      </aside>
+
+      <article class="max-w-3xl">
+        <p class="lead">{doc.intro}</p>
+        {doc.blocks.map((b) => (
+          <section class="mt-10" aria-labelledby={id(b.h)}>
+            <h2 id={id(b.h)} class="text-3xl text-forest-900">{b.h}</h2>
+            {b.p?.map((t) => <p class="mt-4 text-base leading-relaxed text-muted">{t}</p>)}
+            {b.ul && (
+              <ul class="mt-4 space-y-3">
+                {b.ul.map((t) => (
+                  <li class="flex items-start gap-3 text-base leading-relaxed text-muted">
+                    <span aria-hidden="true" class="mt-2.5 block h-1.5 w-1.5 shrink-0 rotate-45 bg-gold-500"></span>{t}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+        <p class="mt-14 border-t border-forest-900/10 pt-6 text-sm text-muted">Questions? Call <a href={site.phoneHref} class="text-forest-900 underline underline-offset-4 hover:text-gold-700">{site.phone}</a>.</p>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('[data-cookie-settings]').forEach((b) => b.addEventListener('click', () => window.dispatchEvent(new CustomEvent('pp:cookie-settings'))));
+  </script>
+</BaseLayout>

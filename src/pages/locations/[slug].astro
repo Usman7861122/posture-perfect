@@ -1,0 +1,240 @@
+---
+// One page per office: /locations/north-dallas-parkway/ and /locations/mckinney/
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Reveal from '../../components/react/Reveal';
+import LocationsMap from '../../components/react/LocationsMap';
+import { site } from '../../data/site';
+import { img } from '../../data/images';
+import { providers } from '../../data/providers';
+import { reviews, googleRating, googleLinks } from '../../data/reviews';
+
+export function getStaticPaths() {
+  return site.locations.map((l) => ({ params: { slug: l.slug }, props: { loc: l } }));
+}
+
+const { loc } = Astro.props;
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+const isDallas = loc.id === 'dallas';
+const areas = loc.nearby.replace(/ and the greater .*$/, '').split(', ').filter(Boolean);
+const region = loc.nearby.match(/greater (.*) area/)?.[1] ?? '';
+const other = site.locations.find((l) => l.id !== loc.id)!;
+const dir = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(loc.query)}`;
+
+const title = `Chiropractor & Spine Care in ${loc.city}, TX | ${loc.name} Office`;
+const desc = `Visit Posture Perfect Wellness Center at ${loc.street}, ${loc.cityLine}. Chiropractic care, pain management, sports medicine and rehabilitation. Call ${site.phone}.`;
+const url = new URL(`/locations/${loc.slug}/`, Astro.site).toString();
+
+const picks = ['Ryan Giniel', 'Mary Roos', 'Conor Dines-Booth'].map((n) => reviews.find((r) => r.name === n)!);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MedicalClinic',
+      name: `${site.name} – ${loc.name}`,
+      url,
+      telephone: site.phone,
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: loc.street,
+        addressLocality: loc.city,
+        addressRegion: 'TX',
+        postalCode: loc.cityLine.match(/\d{5}/)?.[0],
+        addressCountry: 'US',
+      },
+      openingHoursSpecification: [
+        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Wednesday', 'Thursday'], opens: '08:00', closes: '18:00' },
+        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Friday'], opens: '08:00', closes: '14:00' },
+      ],
+      areaServed: areas,
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 2, name: 'Locations', item: new URL('/locations/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 3, name: loc.name, item: url },
+      ],
+    },
+  ],
+};
+
+const facts = [
+  { k: 'Address', v: `${loc.street}, ${loc.cityLine}`, icon: 'M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11zM12 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z' },
+  { k: 'Call us', v: site.phone, href: site.phoneHref, icon: 'M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z' },
+  { k: 'Open', v: 'Mon, Wed, Thu 8–6 · Tue, Fri 8–2', icon: 'M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
+  { k: 'Directions', v: 'Open in Google Maps', href: dir, icon: 'M3 11l18-8-8 18-2-8-8-2z' },
+];
+---
+
+<BaseLayout title={title} description={desc} jsonLd={jsonLd}>
+  <section class="on-dark relative isolate overflow-hidden bg-forest-950 pb-16 pt-36 text-ivory-50 md:pb-24 md:pt-44">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20" style={`background-image: ${bg(img.hero)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/95 via-forest-950/80 to-forest-950/50"></div>
+    <div class="container-page">
+      <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+        <ol class="flex flex-wrap items-center gap-x-2">
+          <li><a href="/" class="hover:text-gold-300">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a href="/locations/" class="hover:text-gold-300">Locations</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-gold-300" aria-current="page">{loc.name}</li>
+        </ol>
+      </nav>
+      <p class="eyebrow mt-10">{loc.city}, Texas</p>
+      <h1 class="mt-4 max-w-3xl text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-ivory-50">{isDallas ? 'Our Dallas' : 'Our McKinney'} <em class="gold-text">office</em></h1>
+      <span aria-hidden="true" class="my-7 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+      <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">
+        {isDallas
+          ? 'Chiropractic care, pain management, sports medicine and rehabilitation on North Dallas Parkway. One team, one plan.'
+          : 'The same careful, root-cause care, close to home for patients in McKinney, Allen, Frisco and nearby towns.'}
+      </p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Book at {loc.city}</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK FACTS -->
+  <section class="border-y border-gold-500/30 bg-ivory-100">
+    <ul class="container-page grid divide-forest-900/10 sm:grid-cols-2 sm:divide-x lg:grid-cols-4">
+      {facts.map((f) => (
+        <li class="border-b border-forest-900/10 sm:border-b-0">
+          {(() => {
+            const Tag = f.href ? 'a' : 'div';
+            return (
+              <Tag href={f.href} target={f.href?.startsWith('http') ? '_blank' : undefined} rel={f.href?.startsWith('http') ? 'noopener' : undefined} class="group flex h-full items-start gap-4 px-4 py-7 transition-colors hover:bg-ivory-200/60 sm:px-7">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center bg-forest-900 text-gold-300 transition-colors group-hover:bg-gold-500 group-hover:text-forest-950">
+                  <svg aria-hidden="true" viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d={f.icon} /></svg>
+                </span>
+                <span>
+                  <span class="block text-xs uppercase tracking-[0.18em] text-gold-700">{f.k}</span>
+                  <span class="mt-1 block text-[15px] leading-snug text-forest-900">{f.v}</span>
+                </span>
+              </Tag>
+            );
+          })()}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- MAP + HOURS -->
+  <section class="section">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">Find us</p>
+        <h2 class="display mt-5 text-forest-900">Visit the <em class="text-gold-600">{loc.name}</em> office</h2>
+      </Reveal>
+      <LocationsMap client:visible only={loc.id} />
+    </div>
+  </section>
+
+  <!-- NEARBY AREAS -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20" style={`background-image: ${bg(img.approach)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/85"></div>
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-10 max-w-3xl text-center">
+        <p class="eyebrow">Areas we serve</p>
+        <h2 class="display mt-5 !text-ivory-50">Patients come from <em class="gold-text">across {region || 'North Texas'}.</em></h2>
+      </Reveal>
+      <ul class="flex flex-wrap justify-center gap-3">
+        {areas.map((a) => (
+          <li class="flex items-center gap-3 border border-ivory-50/25 bg-forest-950/50 px-5 py-3 backdrop-blur-sm">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4 text-gold-400" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z" /><circle cx="12" cy="10" r="2.5" /></svg>
+            {a}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- CARE AT THIS OFFICE -->
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">Care at this office</p>
+        <h2 class="display mt-5 text-forest-900">Everything under <em class="text-gold-600">one roof.</em></h2>
+        <p class="lead mt-6">Start with an exam and a clear plan. We look for the cause of your pain, not only the symptom.</p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/treatments/" class="btn-dark">All Treatments</a>
+          <a href="/condition-we-treat/" class="btn-outline">Conditions We Treat</a>
+        </div>
+      </Reveal>
+      <Reveal client:visible>
+        <ul class="grid gap-px bg-forest-900/10 sm:grid-cols-2">
+          {['Spine and back care', 'Neck pain and headaches', 'Sciatica and nerve pain', 'Sports injuries', 'Pain management', 'Rehabilitation and physical therapy', 'Auto accident injuries', 'Functional medicine and wellness'].map((t) => (
+            <li class="flex items-center gap-3 bg-ivory-50 p-5 text-forest-900">
+              <span aria-hidden="true" class="block h-2 w-2 shrink-0 rotate-45 bg-gold-500"></span>{t}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- PROVIDERS -->
+  <section class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">Your providers</p>
+        <h2 class="display mt-5 text-forest-900">Meet the <em class="text-gold-600">team.</em></h2>
+      </Reveal>
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {providers.map((p) => (
+          <li>
+            <a href={`/our-team/${p.slug}/`} class="group block overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500">
+              <span class="relative block aspect-[4/5] overflow-hidden bg-forest-800">
+                <img src={p.image} alt={p.short} width="400" height="500" loading="lazy" class="h-full w-full object-cover object-top grayscale-[35%] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0" onerror="this.style.display='none'" />
+              </span>
+              <span class="block p-5">
+                <span class="block font-serif text-2xl text-forest-900">{p.short}</span>
+                <span class="mt-1 block text-xs uppercase tracking-[0.15em] text-gold-700">{p.role}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">{googleRating.score} on Google · {googleRating.count} reviews</p>
+        <h2 class="display mt-5 text-forest-900">Patients <em class="text-gold-600">trust us.</em></h2>
+      </Reveal>
+      <ul class="grid gap-5 md:grid-cols-3">
+        {picks.map((r) => (
+          <li class="flex flex-col border border-forest-900/15 bg-ivory-50 p-7">
+            <span aria-label="5 out of 5 stars" class="flex gap-0.5 text-gold-500">
+              {[0, 1, 2, 3, 4].map(() => <svg aria-hidden="true" viewBox="0 0 20 20" class="h-4 w-4 fill-current"><path d="M10 1.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.8l6-.8z" /></svg>)}
+            </span>
+            <blockquote class="mt-4 flex-1 text-[15px] leading-relaxed text-forest-900/85">{r.text}</blockquote>
+            <p class="mt-5 border-t border-forest-900/10 pt-4 text-sm"><span class="font-medium text-forest-900">{r.name}</span> <span class="text-xs uppercase tracking-[0.15em] text-gold-700">· Google review</span></p>
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a href="/reviews/" class="btn-dark">Read More Reviews</a>
+        <a href={googleLinks.read} target="_blank" rel="noopener" class="btn-outline">See us on Google</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-900"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">Ready when <em class="gold-text">you are.</em></h2>
+      <p class="lead mt-6">Book a visit at our {loc.name} office, or call us and we will find a time that works.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={`/locations/${other.slug}/`} class="btn-outline-light">Or visit {other.city}</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

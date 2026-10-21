@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import Header from '../components/react/Header';
+import Footer from '../components/Footer.astro';
+import CookieConsent from '../components/react/CookieConsent';
+import AssessmentChat from '../components/react/AssessmentChat';
+import { site } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  jsonLd?: object | object[];
+}
+
+const { title, description = site.description, jsonLd } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Chiropractor & Spine Care in Dallas & McKinney`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b2a22" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-ivory-50 focus:px-5 focus:py-3 focus:text-forest-900">
+      Skip to content
+    </a>
+    <Header client:load />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <AssessmentChat client:idle />
+    <CookieConsent client:idle />
+  </body>
+</html>

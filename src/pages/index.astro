@@ -1,0 +1,353 @@
+---
+const slugify: Record<string, string> = {
+  'Rehabilitative Exercise': 'rehabilitative-exercise',
+  'Sports Injury Treatment': 'sports-injury-treatment',
+  'Therapeutic Ultrasound & Modalities': 'therapeutic-ultrasound-modalities',
+  'Conservative Pain Management': 'conservative-pain-management',
+  'Headaches & Migraines': 'headaches-migraines',
+  'Sports Injuries': 'sports-injury',
+  'Postural & Movement Dysfunction': 'postural-and-movement-dysfunction',
+  'Pregnancy-Related Pain': 'pregnancy-related-pain',
+  'Foot & Ankle Pain': 'foot-and-ankle-pain',
+};
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/react/Hero';
+import Reveal from '../components/react/Reveal';
+import AboutVisual from '../components/react/AboutVisual';
+import ServicesFlip from '../components/react/ServicesFlip';
+import ConditionsGrid from '../components/react/ConditionsGrid';
+import WhyTimeline from '../components/react/WhyTimeline';
+import Stats from '../components/react/Stats';
+import TeamGrid from '../components/react/TeamGrid';
+import ApproachTabs from '../components/react/ApproachTabs';
+import Phases from '../components/react/Phases';
+import Testimonials from '../components/react/Testimonials';
+import LocationsMap from '../components/react/LocationsMap';
+import FaqAccordion from '../components/react/FaqAccordion';
+import { site } from '../data/site';
+import { img } from '../data/images';
+import { moreServices, moreConditions, blog, specialties } from '../data/content';
+import { posts, postUrl } from '../data/blog';
+const full = new Set(Object.keys(import.meta.glob('../data/posts/*.md')).map((p) => p.split('/').pop()!.replace('.md', '')));
+const blogHref = (title: string) => { const p = posts.find((x) => x.title === title); return !p ? '/blog/' : full.has(p.slug) ? `/blog/${p.slug}/` : postUrl(p.slug); };
+const blogUrl = '/blog/';
+
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    ...site.locations.map((l) => ({
+      '@type': 'MedicalClinic',
+      name: `${site.name} – ${l.name}`,
+      telephone: site.phone,
+      url: Astro.site?.toString(),
+      address: { '@type': 'PostalAddress', streetAddress: l.street, addressLocality: l.city, addressRegion: 'TX' },
+      openingHoursSpecification: [
+        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Wednesday', 'Thursday'], opens: '08:00', closes: '18:00' },
+        { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Tuesday', 'Friday'], opens: '08:00', closes: '14:00' },
+      ],
+    })),
+    {
+      '@type': 'FAQPage',
+      mainEntity: site.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+    },
+  ],
+};
+---
+
+<BaseLayout jsonLd={jsonLd}>
+  <!-- 1. HERO -->
+  <Hero client:load />
+
+  <!-- 2. ABOUT -->
+  <section id="about" class="section relative overflow-hidden">
+    <div class="container-page relative grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">About Us</p>
+        <h2 class="display mt-5 text-forest-900">Much more than a <em class="text-gold-600">traditional</em> chiropractic clinic.</h2>
+        <p class="lead mt-7">
+          Posture Perfect Wellness Center brings together chiropractic physicians, medical providers, pain management specialists, rehabilitation professionals and orthopedic spine expertise, all in one place.
+        </p>
+        <p class="mt-5 text-muted">
+          Patients choose us because they want more than a one-size-fits-all plan. We look for the root cause, explain it clearly, and build a path back to the life you want.
+        </p>
+
+        <dl class="mt-10 grid grid-cols-3 border-y border-forest-900/15">
+          {[['2', 'Offices'], ['4', 'Providers'], [site.rating, 'Patient rating']].map(([v, l], i) => (
+            <div class:list={['py-6', i > 0 && 'border-l border-forest-900/15 pl-5 sm:pl-8']}>
+              <dt class="font-serif text-4xl text-forest-900 sm:text-5xl">{v}</dt>
+              <dd class="mt-1 text-xs uppercase tracking-[0.18em] text-muted">{l}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <ul class="mt-8 grid gap-3 text-forest-900 sm:grid-cols-2">
+          {['Orthopedic & neurological evaluation', 'Sports medicine & rehabilitation', 'Integrated pain management', 'Individualized treatment plans'].map((t) => (
+            <li class="flex items-start gap-3">
+              <span aria-hidden="true" class="mt-2 block h-2 w-2 shrink-0 rotate-45 bg-gold-500"></span>
+              {t}
+            </li>
+          ))}
+        </ul>
+        <a href="/our-team/" class="btn-dark mt-10">Meet Our Providers</a>
+      </Reveal>
+
+      <AboutVisual client:visible years={new Date().getFullYear() - site.since} />
+    </div>
+  </section>
+
+  <!-- 3. TREATMENTS -->
+  <section id="treatments" class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Treatments</p>
+        <h2 class="display mt-5 text-forest-900">Care for the <em class="text-gold-600">whole</em> body.</h2>
+        <p class="lead mt-6">Hover over a card, or tap it on your phone, to see how each treatment can help.</p>
+      </Reveal>
+      <div class="mt-12"><ServicesFlip client:visible /></div>
+      <Reveal client:visible className="mt-14 flex flex-wrap justify-center gap-3">
+        {moreServices.map((s) => (
+          <a href={`/treatments/${slugify[s]}/`} class="rounded-sm border border-forest-900/20 px-5 py-2 text-sm text-forest-900 transition-colors hover:border-forest-900 hover:bg-forest-900 hover:text-ivory-50">{s}</a>
+        ))}
+      </Reveal>
+      <Reveal client:visible className="mt-10 text-center">
+        <a href="/treatments/" class="btn-dark">View All Treatments</a>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 4. CONDITIONS -->
+  <section id="conditions" class="section">
+    <div class="container-page">
+      <Reveal client:visible className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-2xl">
+          <p class="eyebrow">Conditions We Treat</p>
+          <h2 class="display mt-5 text-forest-900">Whatever is holding you back, <em class="text-gold-600">we can help.</em></h2>
+        </div>
+        <a href="/condition-we-treat/" class="btn-outline self-start md:self-auto">All Conditions</a>
+      </Reveal>
+      <div class="mt-14"><ConditionsGrid client:visible /></div>
+      <Reveal client:visible className="mt-10 flex flex-wrap items-center gap-3">
+        <span class="mr-2 text-sm uppercase tracking-[0.2em] text-gold-700">Also treating</span>
+        {moreConditions.map((s) => (
+          <a href={`/condition-we-treat/${slugify[s]}/`} class="rounded-sm bg-ivory-200 px-5 py-2 text-sm text-forest-900 transition-colors hover:bg-forest-900 hover:text-ivory-50">{s}</a>
+        ))}
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 5. WHY PATIENTS CHOOSE -->
+  <section id="why" class="section bg-ivory-100">
+    <div class="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+      <div class="lg:sticky lg:top-32 lg:self-start">
+        <Reveal client:visible>
+          <p class="eyebrow">Why Patients Choose Posture Perfect</p>
+          <h2 class="display mt-5 text-forest-900">A different kind of <em class="text-gold-600">care.</em></h2>
+          <p class="lead mt-6">Seven reasons our patients trust us with their spine, their sport and their recovery.</p>
+          <a href="/contact" class="btn-dark btn-book mt-9">Schedule an Evaluation</a>
+        </Reveal>
+        <div class="relative mt-12 hidden aspect-[4/3] overflow-hidden rounded-sm ph lg:block">
+          <img src="/images/services/rehabilitation.webp" alt="" width="768" height="576" loading="lazy" class="h-full w-full object-cover" onerror="this.style.display='none'" />
+          <div class="absolute inset-0 bg-gradient-to-t from-forest-950/60 to-transparent"></div>
+          <p class="absolute bottom-5 left-5 font-serif text-2xl italic text-ivory-50">Care built around you.</p>
+        </div>
+      </div>
+      <WhyTimeline client:visible />
+    </div>
+  </section>
+
+  <!-- 6. THE CENTER -->
+  <section id="wellness" class="on-dark grain relative overflow-hidden bg-forest-900 py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rotate-45 rounded-sm border border-gold-500/20"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 h-[26rem] w-[26rem] rotate-45 rounded-sm border border-gold-500/20"></div>
+    <div class="container-page relative">
+      <Reveal client:visible className="max-w-4xl">
+        <p class="eyebrow">Posture Perfect Wellness Center</p>
+        <h2 class="display mt-6 !text-ivory-50">One team. <em class="gold-text">Every part of your recovery.</em></h2>
+        <p class="lead mt-8 max-w-3xl">
+          Sports injury evaluation, rehabilitation, therapeutic exercise, soft tissue treatment and return-to-activity care for youth athletes, competitive athletes, recreational athletes and active adults, with spine, pain and orthopedic expertise right beside them.
+        </p>
+      </Reveal>
+      <div class="mt-16">
+        <Stats
+          client:visible
+          stats={[
+            { value: site.since, plain: true, label: 'Serving North Texas since' },
+            { value: 2, label: 'Dallas & McKinney offices' },
+            { value: 4.9, decimals: 1, label: 'Average patient rating' },
+            { value: site.reviewCount, suffix: '+', label: 'Patient reviews' },
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. TEAM -->
+  <section id="team" class="section">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">Our Providers</p>
+        <h2 class="display mt-5 text-forest-900">Multidisciplinary experts, <em class="text-gold-600">one plan.</em></h2>
+        <p class="lead mt-6">Chiropractic physicians, medical providers and orthopedic spine expertise, working together for you.</p>
+      </Reveal>
+      <div class="mt-12"><TeamGrid client:visible /></div>
+      <Reveal client:visible className="mt-12 text-center"><a href="/our-team/" class="btn-outline">View All Providers</a></Reveal>
+    </div>
+  </section>
+
+  <!-- 8. APPROACH -->
+  <section id="approach" class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="mb-14 max-w-3xl">
+        <p class="eyebrow">Our Treatment &amp; Rehabilitation Approach</p>
+        <h2 class="display mt-5 text-forest-900">Root cause first. <em class="text-gold-600">Always.</em></h2>
+      </Reveal>
+      <ApproachTabs client:visible />
+    </div>
+  </section>
+
+  <!-- 9. PHASES -->
+  <section id="phases" class="on-dark relative isolate overflow-hidden py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.phases)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/80"></div>
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">Our Phased Progression of Care</p>
+        <h2 class="display mt-5 !text-ivory-50">From pain to <em class="gold-text">resilience</em>, step by step.</h2>
+        <p class="lead mt-6">A clear roadmap, so you always know where you are and what comes next.</p>
+      </Reveal>
+      <Phases client:visible />
+    </div>
+  </section>
+
+  <!-- 10. TESTIMONIALS -->
+  <section id="reviews" class="on-dark relative isolate overflow-hidden py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.reviews)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-forest-950/70 via-forest-950/40 to-forest-950/70"></div>
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-10 max-w-3xl text-center">
+        <p class="eyebrow">Patient Reviews</p>
+        <h2 class="display mt-5 !text-ivory-50">In their <em class="gold-text">own words.</em></h2>
+      </Reveal>
+      <div class="mx-auto max-w-4xl rounded-sm border border-gold-500/50 bg-ivory-50/95 px-6 pb-8 pt-14 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)] backdrop-blur-sm sm:px-12 md:pb-10">
+        <Testimonials client:visible />
+      </div>
+      <div class="mt-10 text-center">
+        <a href="/reviews/" class="btn-outline-light">Read All Reviews</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. UNLOCKING THE PAIN CODE -->
+  <section id="book" class="on-dark grain relative overflow-hidden bg-forest-800 py-16 text-ivory-50 md:py-24">
+    <div class="container-page grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+      <Reveal client:visible className="relative mx-auto w-full max-w-xs [perspective:1200px]">
+        <div aria-hidden="true" class="absolute inset-0 -z-10 translate-x-5 translate-y-5 rounded-sm border border-gold-500/60"></div>
+        <img src={img.book} alt="Book cover: Unlocking the Pain Code by Dr. Yaron Lohr" width="500" height="750" loading="lazy" class="w-full rounded-sm shadow-[0_40px_80px_-20px_rgba(0,0,0,0.7)] transition-transform duration-700 ease-[var(--ease-luxe)] hover:[transform:rotateY(-12deg)_rotateX(4deg)_scale(1.03)]" onerror="this.style.minHeight='360px';this.style.background='#123a2f'" />
+      </Reveal>
+      <Reveal client:visible>
+        <p class="eyebrow">New Book by Dr. Yaron Lohr</p>
+        <h2 class="display mt-5 !text-ivory-50">Unlocking the <em class="gold-text">Pain Code</em></h2>
+        <p class="lead mt-7 max-w-xl">
+          Written by our clinic director, Dr. Yaron Lohr, this book shares a clearer way to understand pain and what it takes to find lasting relief.
+        </p>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="https://www.amazon.com/s?k=Unlocking+the+Pain+Code+Yaron+Lohr" target="_blank" rel="noopener noreferrer" class="btn-gold">Get the Book</a>
+          <a href="/contact" class="btn-outline-light">Meet Dr. Lohr</a>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 12. BLOG -->
+  <section id="blog" class="section">
+    <div class="container-page">
+      <Reveal client:visible className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div class="max-w-2xl">
+          <p class="eyebrow">From Our Blog</p>
+          <h2 class="display mt-5 text-forest-900">Learn how to <em class="text-gold-600">move better.</em></h2>
+        </div>
+        <a href={blogUrl} class="btn-outline self-start md:self-auto">All Articles</a>
+      </Reveal>
+      <Reveal client:visible className="mt-14">
+        <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {blog.map((p) => (
+            <li class="group">
+              <a href={blogHref(p.title)} class="block" target={blogHref(p.title).startsWith("http") ? "_blank" : undefined} rel={blogHref(p.title).startsWith("http") ? "noopener" : undefined}>
+                <div class="relative aspect-[4/3] overflow-hidden rounded-sm ph">
+                  <img src={p.image} alt="" loading="lazy" width="640" height="480" class="h-full w-full object-cover transition-transform duration-[1400ms] ease-[var(--ease-luxe)] group-hover:scale-110" onerror="this.style.display='none'" />
+                  <span class="absolute left-4 top-4 rounded-sm bg-ivory-50/95 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.15em] text-forest-900">{p.tag}</span>
+                </div>
+                <h3 class="mt-5 text-xl leading-snug text-forest-900 transition-colors group-hover:text-gold-700">{p.title}</h3>
+                <p class="mt-3 text-sm text-muted">{p.text}</p>
+                <span class="mt-4 inline-flex min-h-10 items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold-700">Read more <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 13. SPECIALTIES (fixed window parallax) -->
+  <section id="specialties" class="on-dark relative isolate overflow-hidden py-20 text-ivory-50 md:py-32">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.specialties)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/90 via-forest-950/65 to-forest-950/30"></div>
+    <div class="container-page grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
+      <Reveal client:visible>
+        <p class="eyebrow">Our Specialties</p>
+        <h2 class="display mt-5 !text-ivory-50">Focused expertise, <em class="gold-text">proven results.</em></h2>
+        <p class="lead mt-6 max-w-lg">From the first evaluation to your return to the life you love, every specialty is under one roof.</p>
+        <a href="/contact" class="btn-gold btn-book mt-9">Book Your Visit</a>
+      </Reveal>
+      <Reveal client:visible>
+        <ul class="divide-y divide-ivory-50/15 rounded-sm border border-ivory-50/20 bg-forest-950/40 px-6 backdrop-blur-md sm:px-8">
+          {specialties.map((s, i) => (
+            <li class="group flex min-h-16 items-center gap-5 py-4 transition-all duration-500 hover:pl-3">
+              <span class="font-serif text-2xl text-gold-400">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-serif text-2xl text-ivory-50 transition-colors group-hover:text-gold-300 sm:text-3xl">{s}</span>
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- 14. LOCATIONS -->
+  <section id="locations" class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-14 max-w-3xl text-center">
+        <p class="eyebrow">Our Locations</p>
+        <h2 class="display mt-5 text-forest-900">Two offices, <em class="text-gold-600">close to you.</em></h2>
+      </Reveal>
+      <LocationsMap client:visible />
+    </div>
+  </section>
+
+  <!-- 15. FAQ -->
+  <section id="faq" class="section">
+    <div class="container-page grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
+      <Reveal client:visible>
+        <p class="eyebrow">FAQs</p>
+        <h2 class="display mt-5 text-forest-900">Good questions, <em class="text-gold-600">clear answers.</em></h2>
+        <p class="lead mt-6">Still unsure? Call us at <a href={site.phoneHref} class="text-forest-900 underline decoration-gold-500 underline-offset-4">{site.phone}</a>.</p>
+      </Reveal>
+      <FaqAccordion client:visible faqs={site.faqs} />
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.cta)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/80"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">Ready to feel <em class="gold-text">better?</em></h2>
+      <p class="lead mt-6">Start with an evaluation and leave with a plan.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

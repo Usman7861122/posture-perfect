@@ -1,0 +1,109 @@
+---
+// Listing page for all treatments or all conditions.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Reveal from './react/Reveal';
+import { site } from '../data/site';
+import { img } from '../data/images';
+import { liveServices, liveConditions } from '../data/services';
+import { treatments, conditions } from '../data/nav';
+import type { ServiceDetail } from '../data/services';
+
+interface Props { kind: 'treatment' | 'condition' }
+const { kind } = Astro.props;
+const isCond = kind === 'condition';
+const root = isCond ? '/condition-we-treat/' : '/treatments/';
+const pages: Record<string, ServiceDetail> = isCond ? liveConditions : liveServices;
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+
+const groups = isCond
+  ? conditions.map((g) => ({ name: g.group, items: g.items }))
+  : [{ name: 'Core treatments', items: treatments.core }, { name: 'More care', items: treatments.more }];
+const slugOf = (path: string) => path.split('/').filter(Boolean).pop()!;
+
+const title = isCond ? 'Conditions We Treat in Dallas & McKinney, TX' : 'Treatments & Rehabilitation in Dallas & McKinney, TX';
+const desc = isCond
+  ? 'Back, neck, joint, sports and accident injuries. See the conditions we treat at Posture Perfect Wellness Center in Dallas and McKinney.'
+  : 'Spinal decompression, chiropractic care, rehabilitation, pain management and more at Posture Perfect Wellness Center in Dallas and McKinney.';
+const h1 = isCond ? 'Conditions we treat' : 'Our treatments';
+const lead = isCond
+  ? 'Whatever is holding you back, we look for the cause first and build a plan around you.'
+  : 'Spine, sports, pain and rehabilitation care under one roof, with a plan made for you.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: desc,
+  url: new URL(root, Astro.site).toString(),
+  hasPart: Object.values(pages).map((p) => ({ '@type': 'WebPage', name: p.title, url: new URL(`${root}${p.slug}/`, Astro.site).toString() })),
+};
+---
+
+<BaseLayout title={title} description={desc} jsonLd={jsonLd}>
+  <section class="on-dark relative isolate overflow-hidden bg-forest-950 pb-16 pt-36 text-ivory-50 md:pb-24 md:pt-44">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20" style={`background-image: ${bg(img.hero)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/95 via-forest-950/80 to-forest-950/50"></div>
+    <div class="container-page">
+      <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+        <ol class="flex items-center gap-x-2">
+          <li><a href="/" class="hover:text-gold-300">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-gold-300" aria-current="page">{isCond ? 'Conditions' : 'Treatments'}</li>
+        </ol>
+      </nav>
+      <h1 class="mt-10 max-w-3xl text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-ivory-50">{h1}</h1>
+      <span aria-hidden="true" class="my-7 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+      <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">{lead}</p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page space-y-16">
+      {groups.map((g) => (
+        <div>
+          <Reveal client:visible className="mb-8 flex items-center gap-5">
+            <h2 class="text-3xl text-forest-900 sm:text-4xl">{g.name}</h2>
+            <span aria-hidden="true" class="h-px flex-1 bg-gold-500/40"></span>
+          </Reveal>
+          <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {g.items.map((i) => {
+              const p = pages[slugOf(i.path)];
+              return p && (
+                <li>
+                  <a href={`${root}${p.slug}/`} class="group relative flex h-full min-h-[300px] flex-col justify-end overflow-hidden rounded-sm bg-forest-900 p-7 text-ivory-50">
+                    <span aria-hidden="true" class="absolute inset-0 bg-cover bg-center transition-transform duration-[900ms] ease-[var(--ease-luxe)] group-hover:scale-110" style={`background-image: ${bg(p.sideImage)}`}></span>
+                    <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/60 to-forest-950/10"></span>
+                    <span class="relative">
+                      <span class="block font-serif text-3xl leading-tight">{p.title}</span>
+                      <span class="mt-3 block text-sm leading-relaxed text-ivory-100/80">{p.tagline}</span>
+                      <span class="mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-gold-300">
+                        Learn more <span aria-hidden="true" class="transition-transform duration-500 group-hover:translate-x-2">→</span>
+                      </span>
+                    </span>
+                    <span aria-hidden="true" class="absolute bottom-0 left-0 h-0.5 w-0 bg-gold-500 transition-all duration-700 group-hover:w-full"></span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-900"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">Not sure where to <em class="gold-text">start?</em></h2>
+      <p class="lead mt-6">Start with an evaluation and leave with a plan. We have two offices, in Dallas and McKinney.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

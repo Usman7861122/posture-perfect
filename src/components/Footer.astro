@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+import { img } from '../data/images';
+import { legalDocs } from '../data/legal';
+const year = new Date().getFullYear();
+---
+
+<footer class="on-dark relative overflow-hidden bg-forest-950 text-ivory-200/80">
+  <div class="container-page grid gap-12 pb-12 pt-20 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+    <div>
+      <a href="/" class="inline-block rounded-sm bg-ivory-50 px-5 py-4" aria-label={site.name}>
+        <img src={img.logo} alt={site.name} width="803" height="177" loading="lazy" class="h-10 w-auto" />
+      </a>
+      <p class="mt-6 max-w-xs font-serif text-2xl italic text-ivory-50">{site.tagline}</p>
+      <a href={site.phoneHref} class="mt-6 inline-block text-xl text-gold-300 hover:text-gold-400">{site.phone}</a>
+    </div>
+
+    <div>
+      <h2 class="font-sans text-xs font-medium uppercase tracking-[0.25em] text-gold-400">Explore</h2>
+      <ul class="mt-5 space-y-1">
+        {site.nav.map((n) => (
+          <li><a href={n.href} class="inline-flex min-h-9 items-center text-sm hover:text-gold-300">{n.label}</a></li>
+        ))}
+        <li><a href="/contact" class="inline-flex min-h-9 items-center text-sm hover:text-gold-300">Book Online</a></li>
+      </ul>
+    </div>
+
+    {site.locations.map((l) => (
+      <div>
+        <h2 class="font-sans text-xs font-medium uppercase tracking-[0.25em] text-gold-400"><a href={`/locations/${l.slug}/`} class="hover:text-gold-300">{l.city}</a></h2>
+        <address class="mt-5 text-sm not-italic leading-loose">
+          {l.street}<br />{l.cityLine}
+        </address>
+        <p class="mt-4 text-sm leading-loose">
+          Mon, Wed, Thu · 8 AM – 6 PM<br />
+          Tue, Fri · 8 AM – 2 PM<br />
+          Sat, Sun · Closed
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div class="border-t border-ivory-50/10">
+    <div class="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs sm:flex-row">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1" aria-label="Legal">
+        {legalDocs.map((d) => <li><a href={`/${d.slug}/`} class="inline-flex min-h-8 items-center hover:text-gold-300">{d.short}</a></li>)}
+        <li><button type="button" id="footer-cookie-settings" class="inline-flex min-h-8 items-center hover:text-gold-300">Cookie settings</button></li>
+      </ul>
+      <div class="flex items-center gap-5">
+        {site.social.facebook && <a href={site.social.facebook} class="hover:text-gold-300" rel="noopener">Facebook</a>}
+        {site.social.instagram && <a href={site.social.instagram} class="hover:text-gold-300" rel="noopener">Instagram</a>}
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('footer-cookie-settings')?.addEventListener('click', () => window.dispatchEvent(new CustomEvent('pp:cookie-settings')));
+</script>

@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Reveal from '../../components/react/Reveal';
+import ReviewsBrowser from '../../components/react/ReviewsBrowser';
+import { site } from '../../data/site';
+import { img } from '../../data/images';
+import { reviews, topics, googleRating, googleStars, googleLinks } from '../../data/reviews';
+
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+const title = 'Patient Reviews | Posture Perfect Wellness Center, Dallas & McKinney';
+const desc = 'Read real Google reviews from patients of Posture Perfect Wellness Center in Dallas and McKinney, TX.';
+const total = googleStars.reduce((a, s) => a + s.count, 0);
+
+// No star-rating markup here on purpose: Google does not show stars for a business reviewing itself.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebPage', name: title, description: desc, url: new URL('/reviews/', Astro.site).toString() },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 2, name: 'Reviews', item: new URL('/reviews/', Astro.site).toString() },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout title={title} description={desc} jsonLd={jsonLd}>
+  <section class="on-dark relative isolate overflow-hidden bg-forest-950 pb-16 pt-36 text-ivory-50 md:pb-24 md:pt-44">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20" style={`background-image: ${bg(img.reviews)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/95 via-forest-950/80 to-forest-950/55"></div>
+    <div class="container-page">
+      <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+        <ol class="flex items-center gap-x-2">
+          <li><a href="/" class="hover:text-gold-300">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li class="text-gold-300" aria-current="page">Reviews</li>
+        </ol>
+      </nav>
+      <h1 class="mt-10 max-w-3xl text-[clamp(2.25rem,5vw,4.25rem)] leading-[1.05] text-ivory-50">What our patients <em class="gold-text">say</em></h1>
+      <span aria-hidden="true" class="my-7 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+      <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">Real words from real people. Every review below is copied from our Google profile.</p>
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={googleLinks.read} target="_blank" rel="noopener" class="btn-outline-light">Read all on Google</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- RATING SUMMARY -->
+  <section class="border-b border-gold-500/30 bg-ivory-100">
+    <div class="container-page grid items-center gap-10 py-12 md:grid-cols-[auto_1fr] md:gap-16">
+      <div class="text-center md:text-left">
+        <span class="block font-serif text-7xl leading-none text-forest-900">{googleRating.score}</span>
+        <span aria-label="4.9 out of 5 stars" class="mt-3 flex justify-center gap-1 text-gold-500 md:justify-start">
+          {[0, 1, 2, 3, 4].map(() => <svg aria-hidden="true" viewBox="0 0 20 20" class="h-5 w-5 fill-current"><path d="M10 1.5l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L1.4 7.8l6-.8z" /></svg>)}
+        </span>
+        <span class="mt-2 block text-xs uppercase tracking-[0.18em] text-gold-700">{googleRating.count} Google reviews</span>
+      </div>
+      <ul class="space-y-2.5" aria-label="Rating breakdown">
+        {googleStars.map((s) => (
+          <li class="grid grid-cols-[2.5rem_1fr_3rem] items-center gap-4 text-sm text-forest-900">
+            <span>{s.stars} star</span>
+            <span class="relative h-2 bg-forest-900/10"><span class="absolute inset-y-0 left-0 bg-gold-500" style={`width:${(s.count / total) * 100}%`}></span></span>
+            <span class="text-right text-muted">{s.count}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">Google reviews</p>
+        <h2 class="display mt-5 text-forest-900">Care that people <em class="text-gold-600">remember.</em></h2>
+        <p class="lead mt-6">Pick a topic to see stories like yours.</p>
+      </Reveal>
+      <ReviewsBrowser client:load reviews={reviews} topics={topics} readUrl={googleLinks.read} />
+    </div>
+  </section>
+
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-900"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">Been to see us? <em class="gold-text">Tell others.</em></h2>
+      <p class="lead mt-6">Your words help the next person find the right care.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={googleLinks.write} target="_blank" rel="noopener" class="btn-gold">Review us on Google</a>
+        <a href="/contact" class="btn-outline-light btn-book">Book Online</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

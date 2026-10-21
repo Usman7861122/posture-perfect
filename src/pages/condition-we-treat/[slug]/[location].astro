@@ -1,0 +1,14 @@
+---
+import ServicePage from '../../../components/ServicePage.astro';
+import { liveConditions } from '../../../data/services';
+import { site } from '../../../data/site';
+
+export function getStaticPaths() {
+  return Object.values(liveConditions).flatMap((service) =>
+    site.locations.map((location) => ({ params: { slug: service.slug, location: location.slug }, props: { service, location } })),
+  );
+}
+const { service, location } = Astro.props;
+---
+
+<ServicePage service={service} location={location} />

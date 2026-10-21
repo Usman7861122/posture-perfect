@@ -1,0 +1,299 @@
+---
+// Doctor profile: Dr. Yaron Lohr. Text is rewritten from the old website's profile page.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Reveal from '../../../components/react/Reveal';
+import CredentialsTimeline from '../../../components/react/CredentialsTimeline';
+import { site } from '../../../data/site';
+import { img } from '../../../data/images';
+
+const name = 'Yaron Lohr, DC, CFSA';
+const photo = ['/images/team/yaron-lohr.png'];
+const bg = (list: string[]) => list.map((u) => `url(${u})`).join(', ');
+const url = new URL('/our-team/yaron-lohr-dc-cfsa/', Astro.site).toString();
+
+const stats = [
+  { v: '20+', k: 'Years of experience' },
+  { v: 'CFSA', k: 'Certified Surgical First Assistant' },
+  { v: 'MBA', k: 'Healthcare Management' },
+  { v: '2002', k: 'Founded the clinic' },
+];
+
+const beliefs = [
+  { t: 'Find the root cause', x: 'Treating only the symptom gives short relief. We look for what is really causing the problem.' },
+  { t: 'Follow the evidence', x: 'Every recommendation is based on research and clinical evidence, and Dr. Lohr keeps learning as new studies appear.' },
+  { t: 'Plans made for one', x: 'No two patients are the same, so every plan is built around your needs, goals and life.' },
+  { t: 'Teach, do not just treat', x: 'When you understand why a treatment works, you build habits that last.' },
+];
+
+const expertise = [
+  { t: 'Chiropractic care', x: 'Advanced techniques for spinal alignment and structure.' },
+  { t: 'Pain management', x: 'Fresh, non-surgical ways to treat pain.' },
+  { t: 'Functional medicine', x: 'Looking at the whole body, including nutrition and lifestyle.' },
+  { t: 'Blood lab analysis', x: 'Careful reading of blood chemistry and other biomarkers.' },
+  { t: 'Sports medicine', x: 'Plans for athletes and active people who want to recover faster.' },
+  { t: 'Rehabilitation', x: 'Hands-on care and exercise to restore movement and strength.' },
+];
+
+const leads = [
+  { t: 'Posture Perfect Wellness Center', x: 'Founder. A multidisciplinary team in Dallas and McKinney offering chiropractic, rehabilitation and wellness care.' },
+  { t: 'Medcare Health Management', x: 'A medical group that runs a surgical center, a pharmacy and several health clinics across Texas.' },
+  { t: 'Parker University', x: 'Clinical faculty. Teaches and guides the next generation of chiropractic doctors.' },
+];
+
+const certs = ['National Board of Chiropractic Examiners', 'Certified Nutrition Specialist', 'Certified Functional Medicine Practitioner', 'Certified Surgical First Assistant'];
+// one icon per certification (same order as certs)
+const certIcons = [
+  '<rect x="8" y="3" width="8" height="3.500" rx="1"/><rect x="7.500" y="8.500" width="9" height="3.500" rx="1"/><rect x="7" y="14" width="10" height="3.500" rx="1"/><path d="M9.500 20.500h5"/>',
+  '<path d="M12 7.500C10 5.500 5.500 6 5.500 10.500c0 4.500 3 9 6.500 9s6.500-4.500 6.500-9C18.500 6 14 5.500 12 7.500z"/><path d="M12 7.500c0-2 1-3.500 3-4.500"/>',
+  '<circle cx="12" cy="5" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="18" r="2"/><circle cx="12" cy="12" r="1.500"/><path d="M12 7v3.500M10.700 13l-4 3.500M13.300 13l4 3.500"/>',
+  '<circle cx="12" cy="12" r="9"/><path d="M12 7.500v9M7.500 12h9"/>',
+];
+const orgs = ['American Chiropractic Association', 'Institute for Functional Medicine', 'American Nutrition Association', 'National Wellness Institute', 'International Society of Sports Nutrition'];
+
+const treats = [
+  { t: 'Neck Pain', h: '/condition-we-treat/neck-pain/' },
+  { t: 'Low Back Pain', h: '/condition-we-treat/low-back-pain/' },
+  { t: 'Disc Injuries', h: '/condition-we-treat/disc-injuries/' },
+  { t: 'Auto Accident Injuries', h: '/condition-we-treat/auto-accident-personal-injuries/' },
+  { t: 'Sports Injury', h: '/condition-we-treat/sports-injury/' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Physician',
+      name: 'Dr. Yaron Lohr',
+      honorificSuffix: 'DC, CFSA',
+      jobTitle: 'Chiropractor, Pain Management and Functional Medicine Specialist',
+      url,
+      worksFor: { '@type': 'MedicalClinic', name: site.name, telephone: site.phone },
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Parker University' },
+      knowsAbout: ['Chiropractic', 'Pain management', 'Functional medicine', 'Sports medicine', 'Rehabilitation'],
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 2, name: 'Our Providers', item: new URL('/our-team/', Astro.site).toString() },
+        { '@type': 'ListItem', position: 3, name, item: url },
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout title={`Dr. Yaron Lohr, DC, CFSA | Chiropractor in Dallas & McKinney, TX`} description="Meet Dr. Yaron Lohr, chiropractor, pain management specialist and Certified Surgical First Assistant. Founder of Posture Perfect Wellness Center in Dallas and McKinney, TX." jsonLd={jsonLd}>
+  <!-- HERO -->
+  <section class="on-dark grain relative isolate overflow-hidden bg-forest-950 pb-16 pt-32 text-ivory-50 md:pb-24 md:pt-40">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(184,151,90,0.18),transparent_55%)]"></div>
+    <div class="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
+      <div>
+        <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
+          <ol class="flex flex-wrap items-center gap-x-2">
+            <li><a href="/" class="hover:text-gold-300">Home</a></li>
+            <li aria-hidden="true">/</li>
+            <li><a href="/our-team/" class="hover:text-gold-300">Our Providers</a></li>
+            <li aria-hidden="true">/</li>
+            <li class="text-gold-300" aria-current="page">Dr. Lohr</li>
+          </ol>
+        </nav>
+        <p class="eyebrow mt-10">Founder &amp; Clinic Director</p>
+        <h1 class="mt-5 text-[clamp(2.5rem,5.5vw,4.5rem)] leading-[1.02] text-ivory-50">Dr. Yaron Lohr<span class="block text-[0.5em] font-normal italic text-gold-300">DC, CFSA</span></h1>
+        <span aria-hidden="true" class="my-7 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
+        <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">
+          Chiropractor, pain management specialist and Certified Surgical First Assistant. For more than two decades he has helped patients heal without surgery, and knows when surgery is truly needed.
+        </p>
+        <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="btn-gold btn-book">Book with Dr. Lohr</a>
+          <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+        </div>
+      </div>
+
+      <Reveal client:visible className="relative mx-auto w-full max-w-md lg:max-w-none">
+        <div aria-hidden="true" class="absolute -bottom-4 -right-4 h-full w-full rounded-sm border border-gold-500/60"></div>
+        <div class="relative aspect-[4/5] overflow-hidden rounded-sm bg-forest-800">
+          <img src={photo[0]} alt="Dr. Yaron Lohr, founder of Posture Perfect Wellness Center" width="800" height="1000" class="h-full w-full object-cover object-top" onerror="this.style.display='none'" />
+          <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-forest-950/60 via-transparent to-transparent"></div>
+        </div>
+        <div class="absolute -left-4 bottom-8 bg-gold-500 px-5 py-4 text-forest-950 shadow-xl">
+          <span class="block font-serif text-3xl leading-none">Since 2002</span>
+          <span class="mt-1 block text-[10px] font-medium uppercase tracking-[0.2em]">Caring for North Texas</span>
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="border-y border-gold-500/30 bg-ivory-100">
+    <ul class="container-page grid grid-cols-2 divide-x divide-forest-900/10 lg:grid-cols-4">
+      {stats.map((s) => (
+        <li class="px-4 py-8 text-center sm:px-8">
+          <span class="block font-serif text-4xl text-forest-900 sm:text-5xl">{s.v}</span>
+          <span class="mt-2 block text-xs uppercase tracking-[0.18em] text-gold-700">{s.k}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- BIO -->
+  <section class="section">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <Reveal client:visible>
+        <p class="eyebrow">His story</p>
+        <h2 class="display mt-5 text-forest-900">More than relief. <em class="text-gold-600">Real answers.</em></h2>
+        <blockquote class="mt-8 border-l-2 border-gold-500 pl-6 font-serif text-2xl italic leading-snug text-forest-900">
+          “Treat the cause, not just the symptom.”
+        </blockquote>
+      </Reveal>
+      <Reveal client:visible>
+        <div class="space-y-5 text-base leading-relaxed text-muted">
+          <p class="lead">Dr. Lohr has worked next to orthopedic spine surgeons, pain specialists and rehabilitation professionals. He has even assisted in spinal surgeries.</p>
+          <p>That gives him a rare view. He knows when surgery is the right choice, and he knows how to help many patients avoid it with careful, conservative care.</p>
+          <p>His method joins chiropractic care, physiotherapy and advanced rehabilitation with the ideas of functional medicine. He looks at movement, posture and the nervous system, and also at nutrition and blood chemistry, to support long-term health.</p>
+          <p>He sees people with long-lasting neck and back pain, disc injuries and car accident injuries, as well as athletes and active adults who want to recover faster and stay strong.</p>
+          <p>Dr. Lohr also holds an MBA in Healthcare Management and is clinical faculty at Parker University. He has owned and run multidisciplinary clinics and surgical centers, which shaped the team-based model he uses today.</p>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-2">
+          {treats.map((t) => <a href={t.h} class="bg-ivory-200 px-4 py-2 text-sm text-forest-900 transition-colors hover:bg-forest-900 hover:text-ivory-50">{t.t}</a>)}
+        </div>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- PHILOSOPHY -->
+  <section class="on-dark grain relative overflow-hidden bg-forest-900 py-16 text-ivory-50 md:py-24">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">His philosophy</p>
+        <h2 class="display mt-5 !text-ivory-50">What guides <em class="gold-text">every plan.</em></h2>
+      </Reveal>
+      <ol class="grid gap-px bg-ivory-50/15 sm:grid-cols-2 lg:grid-cols-4">
+        {beliefs.map((b, i) => (
+          <li class="group bg-forest-900 p-8 transition-colors duration-500 hover:bg-forest-800">
+            <span class="font-serif text-5xl text-gold-400/70 transition-colors group-hover:text-gold-300">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-4 text-2xl text-ivory-50">{b.t}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ivory-200/80">{b.x}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- EXPERTISE -->
+  <section class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="max-w-3xl">
+        <p class="eyebrow">Areas of expertise</p>
+        <h2 class="display mt-5 text-forest-900">Training across <em class="text-gold-600">many fields.</em></h2>
+      </Reveal>
+      <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {expertise.map((e) => (
+          <li class="group relative overflow-hidden border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(7,26,21,0.5)]">
+            <span aria-hidden="true" class="block h-2 w-2 rotate-45 bg-gold-500"></span>
+            <h3 class="mt-5 text-2xl text-forest-900">{e.t}</h3>
+            <p class="mt-2 text-sm text-muted">{e.x}</p>
+            <span aria-hidden="true" class="absolute bottom-0 left-0 h-0.5 w-0 bg-gold-500 transition-all duration-700 group-hover:w-full"></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION TIMELINE -->
+  <section class="section">
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-14 max-w-3xl text-center">
+        <p class="eyebrow">Education &amp; training</p>
+        <h2 class="display mt-5 text-forest-900">A career built <em class="text-gold-600">step by step.</em></h2>
+        <p class="lead mt-6">Tap a card to see the details.</p>
+      </Reveal>
+      <CredentialsTimeline client:visible />
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS & AFFILIATIONS -->
+  <section class="section bg-ivory-100">
+    <div class="container-page">
+      <Reveal client:visible className="max-w-3xl">
+        <p class="eyebrow">Board certifications</p>
+        <h2 class="display mt-5 text-forest-900">Certified in <em class="text-gold-600">four fields.</em></h2>
+      </Reveal>
+      <ul class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {certs.map((c, i) => (
+          <li class="group relative overflow-hidden border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:bg-forest-900">
+            <span class="flex h-12 w-12 items-center justify-center bg-forest-900 transition-colors duration-500 group-hover:bg-gold-500">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-6 w-6 fill-none stroke-gold-300 transition-colors group-hover:stroke-forest-950" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={certIcons[i]} />
+            </span>
+            <span class="mt-6 block font-serif text-3xl text-gold-600/60 transition-colors group-hover:text-gold-400/60">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-1 text-2xl leading-tight text-forest-900 transition-colors duration-500 group-hover:text-ivory-50">{c}</h3>
+            <span aria-hidden="true" class="absolute bottom-0 left-0 h-0.5 w-0 bg-gold-500 transition-all duration-700 group-hover:w-full"></span>
+          </li>
+        ))}
+      </ul>
+
+      <Reveal client:visible className="mt-16">
+        <div class="flex items-center gap-5">
+          <h3 class="text-3xl text-forest-900">Professional affiliations</h3>
+          <span aria-hidden="true" class="h-px flex-1 bg-gold-500/40"></span>
+        </div>
+        <ul class="mt-8 flex flex-wrap gap-3">
+          {orgs.map((o) => (
+            <li class="group flex items-center gap-3 border border-forest-900/20 bg-ivory-50 px-5 py-3 text-forest-900 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-500 hover:bg-gold-500 hover:text-forest-950">
+              <span aria-hidden="true" class="block h-2 w-2 rotate-45 bg-gold-500 transition-colors group-hover:bg-forest-950"></span>{o}
+            </li>
+          ))}
+        </ul>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.specialties)}`}></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/85"></div>
+    <div class="container-page">
+      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+        <p class="eyebrow">Leadership</p>
+        <h2 class="display mt-5 !text-ivory-50">Leading care in <em class="gold-text">many places.</em></h2>
+      </Reveal>
+      <ul class="grid gap-5 md:grid-cols-3">
+        {leads.map((l) => (
+          <li class="border border-ivory-50/20 bg-forest-950/50 p-8 backdrop-blur-sm transition-colors duration-500 hover:border-gold-500">
+            <h3 class="text-2xl text-gold-300">{l.t}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ivory-100/80">{l.x}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section class="section">
+    <div class="container-page grid items-center gap-12 lg:grid-cols-[0.6fr_1.4fr] lg:gap-20">
+      <Reveal client:visible className="relative mx-auto w-full max-w-[16rem]">
+        <div aria-hidden="true" class="absolute inset-0 -z-10 translate-x-4 translate-y-4 rounded-sm border border-gold-500/60"></div>
+        <img src={img.book} alt="Book cover: Unlocking the Pain Code by Dr. Yaron Lohr" width="500" height="750" loading="lazy" class="w-full rounded-sm shadow-[0_30px_60px_-20px_rgba(0,0,0,0.5)]" onerror="this.style.minHeight='320px';this.style.background='#123a2f'" />
+      </Reveal>
+      <Reveal client:visible>
+        <p class="eyebrow">Author</p>
+        <h2 class="display mt-5 text-forest-900">Unlocking the <em class="text-gold-600">Pain Code</em></h2>
+        <p class="lead mt-6 max-w-xl">Dr. Lohr shares a clearer way to understand pain and what it takes to find lasting relief.</p>
+        <a href="/#book" class="btn-dark mt-8">Learn About the Book</a>
+      </Reveal>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-900"></div>
+    <Reveal client:visible className="container-page max-w-3xl">
+      <h2 class="display !text-ivory-50">Meet Dr. Lohr at <em class="gold-text">either office.</em></h2>
+      <p class="lead mt-6">Start with an evaluation and leave with a plan. Dallas and McKinney.</p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/contact" class="btn-gold btn-book">Schedule an Evaluation</a>
+        <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+      </div>
+    </Reveal>
+  </section>
+</BaseLayout>

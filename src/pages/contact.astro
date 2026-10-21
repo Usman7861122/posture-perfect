@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/react/ContactForm';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Book an Appointment" description="Request an appointment at Posture Perfect Wellness Center in Dallas or McKinney, Texas.">
+  <section class="section pt-40 md:pt-48">
+    <div class="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+      <div>
+        <p class="eyebrow">Book Online</p>
+        <h1 class="display mt-5 text-forest-900">Let’s get you <em class="text-gold-600">moving again.</em></h1>
+        <p class="lead mt-6">Tell us a little about what is going on. Our team will call you to confirm a time.</p>
+        <p class="mt-8 text-sm uppercase tracking-[0.2em] text-gold-700">Appointments</p>
+        <a href={site.phoneHref} class="font-serif text-4xl text-forest-900 hover:text-gold-700">{site.phone}</a>
+        <div class="mt-10 space-y-8">
+          {site.locations.map((l) => (
+            <address class="border-l border-gold-500 pl-5 not-italic">
+              <p class="font-serif text-2xl text-forest-900">{l.name}</p>
+              <p class="mt-1 text-muted">{l.street}, {l.cityLine}</p>
+            </address>
+          ))}
+        </div>
+      </div>
+      <div class="rounded-sm border border-gold-500/30 bg-ivory-100 p-6 sm:p-10">
+        <ContactForm client:load />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

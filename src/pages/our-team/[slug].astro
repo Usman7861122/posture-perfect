@@ -1,0 +1,11 @@
+---
+import ProviderPage from '../../components/ProviderPage.astro';
+import { providers } from '../../data/providers';
+
+export function getStaticPaths() {
+  return providers.filter((p) => !p.custom).map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+---
+
+<ProviderPage p={p} />
