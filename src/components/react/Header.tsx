@@ -176,7 +176,7 @@ export default function Header() {
   const [mobile, setMobile] = useState(false);
   const [msec, setMsec] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const timer = useRef<number>();
+  const timer = useRef<number | undefined>(undefined);
   const wrap = useRef<HTMLDivElement>(null);
 
   const closeMenu = () => setOpen(null);
