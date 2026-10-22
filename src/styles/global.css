@@ -147,3 +147,14 @@
 .theme-home2 .btn-gold:hover { box-shadow: 0 10px 30px -10px rgb(140 139 168 / 0.8); }
 .theme-home2 .gold-text { color: var(--color-gold-300); }
 .theme-home2 .hero2 .eyebrow { color: var(--color-gold-700); }
+
+/* Home 2 only: slightly larger logo, menu and mega menu */
+.theme-home2 header a[aria-label$=", home"] img { height: 2.75rem; }
+.theme-home2 header nav > ul > li > button,
+.theme-home2 header nav > ul > li > a { font-size: 1.0625rem; }
+.theme-home2 header nav .top-full .text-sm { font-size: 0.9375rem; }
+.theme-home2 header nav .top-full .text-xl { font-size: 1.3rem; }
+.theme-home2 header nav .top-full .text-3xl { font-size: 2rem; }
+.theme-home2 header > div { max-width: 90rem; }
+.theme-home2 header nav > ul > li > a, .theme-home2 header nav > ul > li > button, .theme-home2 header .btn-book, .theme-home2 header a[href^="tel"] { white-space: nowrap; }
+.theme-home2 header a[aria-label$=", home"] img { height: 2.6rem; }
