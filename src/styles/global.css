@@ -118,3 +118,32 @@
 .hero-on-video p { font-weight: 500; color: #fff; }
 .hero-on-video .gold-text { -webkit-text-fill-color: #f4dfa6; background: none; color: #f4dfa6; }
 .hero-on-video a.btn-outline-light { background: rgb(7 26 21 / 0.35); backdrop-filter: blur(6px); }
+
+
+/* ---------- HOME 2 THEME (scoped: only pages whose <body> has .theme-home2) ----------
+   Deep indigo #1D174A leads, soft lavender-grey #8C8BA8 is the accent,
+   and a pale pearl is the light third colour. Same token names, new values. */
+.theme-home2 {
+  --color-ivory-50: #fbfaff;
+  --color-ivory-100: #f3f1fa;
+  --color-ivory-200: #e6e3f1;
+  --color-ivory-300: #d3cfe4;
+
+  --color-forest-950: #110d33;
+  --color-forest-900: #1d174a;
+  --color-forest-800: #281f5e;
+  --color-forest-700: #382f75;
+  --color-forest-600: #4b4290;
+
+  --color-gold-300: #cfcde0;
+  --color-gold-400: #b0aec7;
+  --color-gold-500: #8c8ba8;
+  --color-gold-600: #6d6c8e;
+  --color-gold-700: #55537a;
+
+  --color-ink: #17133a;
+  --color-muted: #595777;
+}
+.theme-home2 .btn-gold:hover { box-shadow: 0 10px 30px -10px rgb(140 139 168 / 0.8); }
+.theme-home2 .gold-text { color: var(--color-gold-300); }
+.theme-home2 .hero2 .eyebrow { color: var(--color-gold-700); }

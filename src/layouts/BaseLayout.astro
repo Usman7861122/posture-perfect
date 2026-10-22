@@ -10,9 +10,10 @@ interface Props {
   title?: string;
   description?: string;
   jsonLd?: object | object[];
+  theme?: string;
 }
 
-const { title, description = site.description, jsonLd } = Astro.props;
+const { title, description = site.description, jsonLd, theme } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Chiropractor & Spine Care in Dallas & McKinney`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -41,7 +42,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body>
+  <body class={theme ? `theme-${theme}` : undefined}>
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-ivory-50 focus:px-5 focus:py-3 focus:text-forest-900">
       Skip to content
     </a>
