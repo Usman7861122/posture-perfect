@@ -58,7 +58,7 @@ const jsonLd = {
 <BaseLayout theme="home2" title="Home 2 | Chiropractor & Spine Care in Dallas & McKinney" jsonLd={jsonLd}>
   <!-- 1. HERO -->
   <section class="hero2 relative isolate overflow-hidden bg-ivory-200">
-    <img src="/images/home2/hero-team.jpg" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1024" fetchpriority="high" class="absolute bottom-0 right-0 top-[84px] -z-20 hidden w-[86%] h-[calc(100%-84px)] object-cover object-[right_top] md:block [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_60px)] [mask-image:linear-gradient(to_bottom,transparent,#000_60px)]" />
+    <img src="/images/home2/hero-team-tall.jpg" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1194" fetchpriority="high" class="absolute inset-y-0 right-0 -z-20 hidden h-full w-[86%] object-cover object-[right_top] md:block" />
     <div aria-hidden="true" class="absolute inset-0 -z-10 hidden md:block md:bg-gradient-to-r md:from-ivory-200 md:from-[14%] md:to-transparent md:to-[24%]"></div>
     <div class="container-page flex flex-col justify-center pb-10 pt-32 md:min-h-[100svh] md:pb-36">
       <div class="max-w-lg">
@@ -75,7 +75,7 @@ const jsonLd = {
     <div class="relative border-t border-forest-900/10 md:absolute md:inset-x-0 md:bottom-0 bg-ivory-50/80 backdrop-blur-md">
       <div class="container-page grid grid-cols-2 gap-y-3 py-4 sm:grid-cols-4">
         {[[`${site.rating} / 5`, `${site.reviewCount} patient reviews`], [`Since ${site.since}`, 'Serving North Texas'], ['2 Locations', 'Dallas & McKinney'], ['One Team', 'Spine, sports & pain care']].map(([a, b]) => (
-          <p class="text-sm"><span class="block font-serif text-2xl text-forest-900">{a}</span><span class="text-muted">{b}</span></p>
+          <p class="group cursor-default border-b-2 border-transparent pb-1 text-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold-500"><span class="block font-serif text-2xl text-forest-900 transition-colors duration-300 group-hover:text-gold-600">{a}</span><span class="text-muted transition-colors duration-300 group-hover:text-forest-900">{b}</span></p>
         ))}
       </div>
     </div>
