@@ -161,3 +161,5 @@
 /* Home 2: the header is a clean full-width bar, and the photo starts right under it */
 .theme-home2 header { background: var(--color-ivory-50); height: 80px; border-bottom: 1px solid rgb(29 23 74 / 0.08); }
 .theme-home2 header > div > div { box-shadow: none; border-color: transparent; background: transparent; }
+/* Home (original): same larger logo as Home 2 */
+.theme-home header a[aria-label$=", home"] img { height: 3.4rem; }
