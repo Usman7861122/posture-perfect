@@ -157,7 +157,7 @@
 .theme-home2 header nav .top-full .text-3xl { font-size: 2rem; }
 .theme-home2 header > div { max-width: 90rem; }
 .theme-home2 header nav > ul > li > a, .theme-home2 header nav > ul > li > button, .theme-home2 header .btn-book, .theme-home2 header a[href^="tel"] { white-space: nowrap; }
-.theme-home2 header a[aria-label$=", home"] img { height: 2.6rem; }
+.theme-home2 header a[aria-label$=", home"] img { height: 3.4rem; }
 /* Home 2: the header is a clean full-width bar, and the photo starts right under it */
 .theme-home2 header { background: var(--color-ivory-50); height: 80px; border-bottom: 1px solid rgb(29 23 74 / 0.08); }
 .theme-home2 header > div > div { box-shadow: none; border-color: transparent; background: transparent; }
