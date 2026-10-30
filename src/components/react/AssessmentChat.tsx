@@ -60,7 +60,7 @@ export default function AssessmentChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.97 }}
             transition={{ duration: 0.45, ease }}
-            className="fixed bottom-24 right-3 z-[60] flex h-[min(620px,calc(100dvh-8rem))] w-[calc(100vw-1.5rem)] max-w-[400px] flex-col overflow-hidden border border-gold-500/50 bg-ivory-50 shadow-[0_30px_80px_-20px_rgba(7,26,21,0.6)] sm:right-6"
+            className="fixed bottom-24 right-3 z-[60] flex h-[min(620px,calc(100dvh-8rem))] w-[calc(100vw-1.5rem)] max-w-[400px] flex-col overflow-hidden border border-gold-500/50 bg-ivory-50 shadow-[0_30px_80px_-20px_rgba(17,13,51,0.6)] sm:right-6"
           >
             <header className="flex items-center justify-between bg-forest-950 px-5 py-4 text-ivory-50">
               <span className="font-serif text-xl">AI Pain Assessment</span>
@@ -105,7 +105,7 @@ export default function AssessmentChat() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="btn-gold btn-book !px-6 !py-3.5 text-sm shadow-[0_18px_40px_-12px_rgba(7,26,21,0.55)]"
+        className="btn-gold btn-book !px-6 !py-3.5 text-sm shadow-[0_18px_40px_-12px_rgba(17,13,51,0.55)]"
       >
         <span className="inline-flex items-center gap-2"><Icon className="h-4 w-4" d="M21 12a8 8 0 01-11.6 7.1L4 20l1-4.6A8 8 0 1121 12z" />{open ? 'Close chat' : 'Free AI Assessment'}</span>
       </button>

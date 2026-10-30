@@ -31,7 +31,7 @@ export default function AboutVisual({ years }: { years: number }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 1, ease, delay: 0.35 }}
-          className="absolute bottom-0 left-0 aspect-[4/3] w-[46%] overflow-hidden rounded-sm border-[6px] border-ivory-50 shadow-[0_20px_40px_-20px_rgba(7,26,21,0.4)] ph"
+          className="absolute bottom-0 left-0 aspect-[4/3] w-[46%] overflow-hidden rounded-sm border-[6px] border-ivory-50 shadow-[0_20px_40px_-20px_rgba(17,13,51,0.4)] ph"
         >
           <img src={img.aboutAccent} alt="" width={803} height={536} loading="lazy" className="h-full w-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
         </motion.div>

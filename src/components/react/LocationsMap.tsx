@@ -16,7 +16,7 @@ export default function LocationsMap({ only }: { only?: string }) {
 
   return (
     <MotionRoot>
-      <div className="grid overflow-hidden rounded-sm border border-gold-500/30 bg-ivory-50 shadow-[0_30px_80px_-40px_rgba(7,26,21,0.45)] lg:grid-cols-[0.8fr_1.2fr]">
+      <div className="grid overflow-hidden rounded-sm border border-gold-500/30 bg-ivory-50 shadow-[0_30px_80px_-40px_rgba(17,13,51,0.45)] lg:grid-cols-[0.8fr_1.2fr]">
         <div className="p-6 sm:p-10">
           <div role="tablist" aria-label="Choose a location" className={`mb-8 inline-flex rounded-sm bg-ivory-200 p-1 ${list.length < 2 ? "hidden" : ""}`}>
             {list.map((l, i) => (

@@ -16,7 +16,7 @@ function Inner() {
       <motion.span
         aria-hidden="true"
         style={{ scaleY: grow }}
-        className="absolute bottom-0 left-0 top-2 w-px origin-top bg-gradient-to-b from-gold-400 to-gold-600 shadow-[0_0_12px_rgba(184,151,90,0.7)]"
+        className="absolute bottom-0 left-0 top-2 w-px origin-top bg-gradient-to-b from-gold-400 to-gold-600 shadow-[0_0_12px_rgba(140,139,168,0.7)]"
       />
       {why.map((w, i) => (
         <motion.li
@@ -29,8 +29,8 @@ function Inner() {
         >
           <motion.span
             aria-hidden="true"
-            initial={{ scale: 0.4, backgroundColor: '#fcfaf5' }}
-            whileInView={{ scale: 1, backgroundColor: '#b8975a' }}
+            initial={{ scale: 0.4, backgroundColor: '#fbfaff' }}
+            whileInView={{ scale: 1, backgroundColor: '#8c8ba8' }}
             viewport={{ margin: '-30% 0px -30% 0px' }}
             transition={{ duration: 0.6, ease }}
             className="absolute -left-[9px] top-2 h-[18px] w-[18px] rounded-sm border border-gold-500 ring-4 ring-ivory-50"

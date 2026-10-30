@@ -49,7 +49,7 @@ const jsonLd = {
 
 <BaseLayout title={fm.title} description={fm.excerpt} jsonLd={jsonLd}>
   <section class="on-dark grain relative isolate overflow-hidden bg-forest-950 pb-14 pt-36 text-ivory-50 md:pb-20 md:pt-44">
-    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(184,151,90,0.18),transparent_55%)]"></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(140,139,168,0.18),transparent_55%)]"></div>
     <div class="container-page max-w-4xl">
       <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
         <ol class="flex flex-wrap items-center gap-x-2">
@@ -104,15 +104,15 @@ const jsonLd = {
 <style is:global>
   .post-body { font-size: 1.0625rem; line-height: 1.8; color: var(--color-muted, #4a5a54); }
   .post-body > * + * { margin-top: 1.25rem; }
-  .post-body h2 { margin-top: 2.75rem; font-family: var(--font-serif, 'Cormorant Garamond', serif); font-size: 2rem; line-height: 1.15; color: var(--color-forest-900, #0b2a22); }
-  .post-body strong { color: var(--color-forest-900, #0b2a22); font-weight: 600; }
+  .post-body h2 { margin-top: 2.75rem; font-family: var(--font-serif, 'Cormorant Garamond', serif); font-size: 2rem; line-height: 1.15; color: var(--color-forest-900, #1d174a); }
+  .post-body strong { color: var(--color-forest-900, #1d174a); font-weight: 600; }
   .post-body ul, .post-body ol { padding-left: 0; list-style: none; }
   .post-body ul li { position: relative; padding-left: 1.5rem; margin-top: 0.5rem; }
-  .post-body ul li::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 7px; height: 7px; background: var(--color-gold-500, #b8975a); transform: rotate(45deg); }
+  .post-body ul li::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 7px; height: 7px; background: var(--color-gold-500, #8c8ba8); transform: rotate(45deg); }
   .post-body ol { counter-reset: n; }
   .post-body ol li { counter-increment: n; position: relative; padding-left: 2.25rem; margin-top: 0.75rem; }
-  .post-body ol li::before { content: counter(n); position: absolute; left: 0; top: 0; font-family: var(--font-serif, serif); font-size: 1.5rem; line-height: 1.4; color: var(--color-gold-600, #a8843f); }
-  .post-body a { color: var(--color-forest-900, #0b2a22); text-decoration: underline; text-underline-offset: 4px; }
-  .post-body a:hover { color: var(--color-gold-700, #8a6a2c); }
-  .post-body > p:first-of-type { font-size: 1.25rem; color: var(--color-forest-900, #0b2a22); }
+  .post-body ol li::before { content: counter(n); position: absolute; left: 0; top: 0; font-family: var(--font-serif, serif); font-size: 1.5rem; line-height: 1.4; color: var(--color-gold-600, #6d6c8e); }
+  .post-body a { color: var(--color-forest-900, #1d174a); text-decoration: underline; text-underline-offset: 4px; }
+  .post-body a:hover { color: var(--color-gold-700, #55537a); }
+  .post-body > p:first-of-type { font-size: 1.25rem; color: var(--color-forest-900, #1d174a); }
 </style>

@@ -18,10 +18,10 @@ function Inner() {
       <svg viewBox="0 0 240 360" className="h-auto w-full" role="img" aria-hidden="true">
         {/* arrows */}
         <motion.g animate={reduce ? undefined : { opacity: [0, 1, 0], y: [6, -2, 6] }} transition={loop} style={{ opacity: reduce ? 1 : undefined }}>
-          <path d="M120 22 L120 6 M112 14 L120 6 L128 14" stroke="#d0b27a" strokeWidth="2" fill="none" />
+          <path d="M120 22 L120 6 M112 14 L120 6 L128 14" stroke="#b0aec7" strokeWidth="2" fill="none" />
         </motion.g>
         <motion.g animate={reduce ? undefined : { opacity: [0, 1, 0], y: [-6, 2, -6] }} transition={loop} style={{ opacity: reduce ? 1 : undefined }}>
-          <path d="M120 338 L120 354 M112 346 L120 354 L128 346" stroke="#d0b27a" strokeWidth="2" fill="none" />
+          <path d="M120 338 L120 354 M112 346 L120 354 L128 346" stroke="#b0aec7" strokeWidth="2" fill="none" />
         </motion.g>
 
         {/* discs */}
@@ -31,7 +31,7 @@ function Inner() {
             x="78"
             width="84"
             rx="3"
-            fill="#b8975a"
+            fill="#8c8ba8"
             initial={{ y: yAt(i, reduce ? G1 : G0) + H, height: reduce ? G1 : G0 }}
             animate={reduce ? undefined : { y: [yAt(i, G0) + H, yAt(i, G1) + H, yAt(i, G0) + H], height: [G0, G1, G0] }}
             transition={loop}
@@ -45,7 +45,7 @@ function Inner() {
             width="116"
             height={H}
             rx="4"
-            fill="#ede6d6"
+            fill="#e6e3f1"
             initial={{ y: yAt(i, reduce ? G1 : G0) }}
             animate={reduce ? undefined : { y: [yAt(i, G0), yAt(i, G1), yAt(i, G0)] }}
             transition={loop}

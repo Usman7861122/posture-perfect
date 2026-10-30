@@ -55,7 +55,7 @@ export default function CredentialsTimeline({ items = defaultItems }: { items?: 
                   type="button"
                   onClick={() => setOpen(i)}
                   aria-label={`Show details: ${it.title}`}
-                  className={`absolute left-5 top-7 z-10 flex h-5 w-5 -translate-x-1/2 rotate-45 items-center justify-center border transition-all duration-500 md:left-1/2 ${isOpen ? 'scale-125 border-gold-600 bg-gold-500 shadow-[0_0_0_6px_rgba(184,151,90,0.25)]' : 'border-gold-500 bg-ivory-50 hover:bg-gold-300'}`}
+                  className={`absolute left-5 top-7 z-10 flex h-5 w-5 -translate-x-1/2 rotate-45 items-center justify-center border transition-all duration-500 md:left-1/2 ${isOpen ? 'scale-125 border-gold-600 bg-gold-500 shadow-[0_0_0_6px_rgba(140,139,168,0.25)]' : 'border-gold-500 bg-ivory-50 hover:bg-gold-300'}`}
                 />
                 <motion.div
                   initial={{ opacity: 0, x: left ? -40 : 40 }}
@@ -70,7 +70,7 @@ export default function CredentialsTimeline({ items = defaultItems }: { items?: 
                     aria-expanded={isOpen}
                     onClick={() => setOpen(i)}
                     onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && (e.preventDefault(), setOpen(i))}
-                    className={`group cursor-pointer border p-6 outline-none transition-all duration-500 focus-visible:ring-2 focus-visible:ring-gold-500 sm:p-8 ${isOpen ? 'border-gold-500 bg-forest-900 text-ivory-50 shadow-[0_30px_60px_-30px_rgba(7,26,21,0.6)]' : 'border-forest-900/15 bg-ivory-50 hover:-translate-y-1 hover:border-gold-500'}`}
+                    className={`group cursor-pointer border p-6 outline-none transition-all duration-500 focus-visible:ring-2 focus-visible:ring-gold-500 sm:p-8 ${isOpen ? 'border-gold-500 bg-forest-900 text-ivory-50 shadow-[0_30px_60px_-30px_rgba(17,13,51,0.6)]' : 'border-forest-900/15 bg-ivory-50 hover:-translate-y-1 hover:border-gold-500'}`}
                   >
                     <div className="flex items-center justify-between gap-4">
                       <span className={`font-serif text-4xl leading-none transition-colors duration-500 ${isOpen ? 'text-gold-300' : 'text-gold-600'}`}>{it.when}</span>

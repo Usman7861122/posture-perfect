@@ -4,25 +4,25 @@
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
-  --color-ivory-50: #fcfaf5;
-  --color-ivory-100: #f7f3ea;
-  --color-ivory-200: #ede6d6;
-  --color-ivory-300: #ddd3bd;
+  --color-ivory-50: #fbfaff;
+  --color-ivory-100: #f3f1fa;
+  --color-ivory-200: #e6e3f1;
+  --color-ivory-300: #d3cfe4;
 
-  --color-forest-950: #071a15;
-  --color-forest-900: #0b2a22;
-  --color-forest-800: #123a2f;
-  --color-forest-700: #1b4d3e;
-  --color-forest-600: #2a6451;
+  --color-forest-950: #110d33;
+  --color-forest-900: #1d174a;
+  --color-forest-800: #281f5e;
+  --color-forest-700: #382f75;
+  --color-forest-600: #4b4290;
 
-  --color-gold-300: #e3cd9c;
-  --color-gold-400: #d0b27a;
-  --color-gold-500: #b8975a;
-  --color-gold-600: #9a7b42;
-  --color-gold-700: #7a5f2b;
+  --color-gold-300: #cfcde0;
+  --color-gold-400: #b0aec7;
+  --color-gold-500: #8c8ba8;
+  --color-gold-600: #6d6c8e;
+  --color-gold-700: #55537a;
 
-  --color-ink: #14201b;
-  --color-muted: #55635c;
+  --color-ink: #17133a;
+  --color-muted: #595777;
 
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -42,7 +42,7 @@
 @utility btn {
     @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-7 py-3 text-sm font-medium tracking-wide transition-all duration-300 active:scale-[0.98];
   }
-@utility btn-gold { @apply btn bg-gold-500 text-forest-950 hover:bg-gold-400 hover:shadow-[0_10px_30px_-10px_rgba(184,151,90,0.8)]; }
+@utility btn-gold { @apply btn bg-gold-500 text-forest-950 hover:bg-gold-400 hover:shadow-[0_10px_30px_-10px_rgba(140,139,168,0.8)]; }
 @utility btn-dark { @apply btn bg-forest-900 text-ivory-50 hover:bg-forest-700; }
 @utility btn-outline { @apply btn border border-forest-900/25 text-forest-900 hover:border-forest-900 hover:bg-forest-900 hover:text-ivory-50; }
 @utility btn-outline-light { @apply btn border border-ivory-50/40 text-ivory-50 hover:border-gold-400 hover:text-gold-300; }
@@ -114,10 +114,10 @@
 .hero-on-video span.block {
   text-shadow: 0 0 2px rgb(0 0 0 / 0.85), 0 1px 6px rgb(0 0 0 / 0.75), 0 3px 22px rgb(0 0 0 / 0.7), 0 0 60px rgb(0 0 0 / 0.55);
 }
-.hero-on-video .eyebrow { color: #fbefcf; font-weight: 600; }
+.hero-on-video .eyebrow { color: #ece9f6; font-weight: 600; }
 .hero-on-video p { font-weight: 500; color: #fff; }
-.hero-on-video .gold-text { -webkit-text-fill-color: #f4dfa6; background: none; color: #f4dfa6; }
-.hero-on-video a.btn-outline-light { background: rgb(7 26 21 / 0.35); backdrop-filter: blur(6px); }
+.hero-on-video .gold-text { -webkit-text-fill-color: #dcdaea; background: none; color: #dcdaea; }
+.hero-on-video a.btn-outline-light { background: rgb(17 13 51 / 0.35); backdrop-filter: blur(6px); }
 
 
 /* ---------- HOME 2 THEME (scoped: only pages whose <body> has .theme-home2) ----------

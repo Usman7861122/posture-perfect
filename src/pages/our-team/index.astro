@@ -46,7 +46,7 @@ const jsonLd = {
     <div class="container-page space-y-6">
       {providers.map((p, i) => (
         <Reveal client:visible>
-          <a href={`/our-team/${p.slug}/`} class:list={['group grid overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:border-gold-500 hover:shadow-[0_30px_60px_-35px_rgba(7,26,21,0.55)]', i % 2 === 1 ? 'md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]' : 'md:grid-cols-[320px_1fr] lg:grid-cols-[380px_1fr]']}>
+          <a href={`/our-team/${p.slug}/`} class:list={['group grid overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:border-gold-500 hover:shadow-[0_30px_60px_-35px_rgba(17,13,51,0.55)]', i % 2 === 1 ? 'md:grid-cols-[1fr_320px] lg:grid-cols-[1fr_380px]' : 'md:grid-cols-[320px_1fr] lg:grid-cols-[380px_1fr]']}>
             <span class:list={['relative block min-h-[320px] overflow-hidden bg-forest-800 md:min-h-[360px]', i % 2 === 1 && 'md:order-2']}>
               <img src={p.image} alt={`${p.short}, ${p.role}`} width="600" height="750" loading="lazy" class="absolute inset-0 h-full w-full object-cover object-top grayscale-[35%] transition-all duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-105 group-hover:grayscale-0" onerror="this.style.display='none'" />
               <span aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-forest-950/50 via-transparent to-transparent"></span>

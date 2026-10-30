@@ -41,7 +41,7 @@ export default function ReviewsBrowser({ reviews, topics, readUrl, pageSize = 9 
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97 }}
               transition={{ duration: 0.5, ease }}
-              className="group flex flex-col border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(7,26,21,0.5)]"
+              className="group flex flex-col border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(17,13,51,0.5)]"
             >
               <div className="flex items-center justify-between">
                 <span aria-label="5 out of 5 stars" className="flex gap-0.5 text-gold-500">

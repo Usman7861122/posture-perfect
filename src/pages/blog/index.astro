@@ -39,7 +39,7 @@ const PAGE = 12;
   <section class="section pb-0">
     <div class="container-page">
       <Reveal client:visible>
-        <a href={href(featured.slug)} target={ext(featured.slug) ? '_blank' : undefined} rel={ext(featured.slug) ? 'noopener' : undefined} class="group grid overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:border-gold-500 hover:shadow-[0_30px_60px_-35px_rgba(7,26,21,0.55)] md:grid-cols-[1.1fr_1fr]">
+        <a href={href(featured.slug)} target={ext(featured.slug) ? '_blank' : undefined} rel={ext(featured.slug) ? 'noopener' : undefined} class="group grid overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:border-gold-500 hover:shadow-[0_30px_60px_-35px_rgba(17,13,51,0.55)] md:grid-cols-[1.1fr_1fr]">
           <span class="relative block min-h-[260px] overflow-hidden bg-forest-800">
             {featured.image && <img src={featured.image} alt="" loading="eager" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-105" onerror="this.style.display='none'" />}
           </span>
@@ -66,9 +66,9 @@ const PAGE = 12;
       <ul id="blog-grid" class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {rest.map((p) => (
           <li data-tag={p.tag} class="blog-card">
-            <a href={href(p.slug)} target={ext(p.slug) ? '_blank' : undefined} rel={ext(p.slug) ? 'noopener' : undefined} class="group flex h-full flex-col overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(7,26,21,0.5)]">
+            <a href={href(p.slug)} target={ext(p.slug) ? '_blank' : undefined} rel={ext(p.slug) ? 'noopener' : undefined} class="group flex h-full flex-col overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(17,13,51,0.5)]">
               <span class="relative block aspect-[16/10] overflow-hidden bg-forest-900">
-                <span aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(184,151,90,0.35),transparent_60%)]"></span>
+                <span aria-hidden="true" class="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(140,139,168,0.35),transparent_60%)]"></span>
                 {p.image && <img src={p.image} alt="" loading="lazy" width="640" height="400" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-105" onerror="this.style.display='none'" />}
                 <span class="absolute left-4 top-4 bg-forest-950/85 px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.2em] text-gold-300">{p.tag}</span>
               </span>
@@ -102,9 +102,9 @@ const PAGE = 12;
 </BaseLayout>
 
 <style is:global>
-  .blog-chip { border: 1px solid rgb(11 42 34 / 0.2); background: var(--color-ivory-50, #fbf8f1); color: var(--color-forest-900, #0b2a22); padding: 0.625rem 1.25rem; font-size: 0.875rem; transition: all 0.3s; }
-  .blog-chip:hover { border-color: var(--color-gold-500, #b8975a); }
-  .blog-chip[aria-pressed='true'] { background: var(--color-forest-900, #0b2a22); border-color: var(--color-forest-900, #0b2a22); color: var(--color-ivory-50, #fbf8f1); }
+  .blog-chip { border: 1px solid rgb(29 23 74 / 0.2); background: var(--color-ivory-50, #fbfaff); color: var(--color-forest-900, #1d174a); padding: 0.625rem 1.25rem; font-size: 0.875rem; transition: all 0.3s; }
+  .blog-chip:hover { border-color: var(--color-gold-500, #8c8ba8); }
+  .blog-chip[aria-pressed='true'] { background: var(--color-forest-900, #1d174a); border-color: var(--color-forest-900, #1d174a); color: var(--color-ivory-50, #fbfaff); }
   .blog-card[hidden] { display: none; }
 </style>
 

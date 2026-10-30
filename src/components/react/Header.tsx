@@ -32,7 +32,7 @@ const Arrow = () => (
 /* ---------- panel frame: dark intro block on the left, content on the right ---------- */
 function Frame({ eyebrow, title, text, cta, children, onNavigate }: { eyebrow: string; title: string; text: string; cta: { label: string; href: string }; children: ReactNode; onNavigate: () => void }) {
   return (
-    <div className="grid overflow-hidden border border-gold-500/40 bg-ivory-50 shadow-[0_40px_80px_-30px_rgba(7,26,21,0.45)] lg:grid-cols-[300px_1fr]">
+    <div className="grid overflow-hidden border border-gold-500/40 bg-ivory-50 shadow-[0_40px_80px_-30px_rgba(17,13,51,0.45)] lg:grid-cols-[300px_1fr]">
       <div className="on-dark flex flex-col justify-between bg-forest-900 p-8 text-ivory-50">
         <div>
           <p className="eyebrow !text-[10px]">{eyebrow}</p>
@@ -214,7 +214,7 @@ export default function Header() {
         className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4"
       >
         <div ref={wrap} className="relative mx-auto max-w-7xl">
-          <div className={`flex h-16 items-center justify-between rounded-sm border px-4 pr-2 backdrop-blur-xl transition-all duration-500 sm:px-6 sm:pr-2.5 ${scrolled || open ? 'border-gold-500/40 bg-ivory-50/95 shadow-[0_10px_40px_-15px_rgba(7,26,21,0.35)]' : 'border-ivory-50/30 bg-ivory-50/90'}`}>
+          <div className={`flex h-16 items-center justify-between rounded-sm border px-4 pr-2 backdrop-blur-xl transition-all duration-500 sm:px-6 sm:pr-2.5 ${scrolled || open ? 'border-gold-500/40 bg-ivory-50/95 shadow-[0_10px_40px_-15px_rgba(17,13,51,0.35)]' : 'border-ivory-50/30 bg-ivory-50/90'}`}>
             <a href="/" aria-label={`${site.name}, home`} className="flex shrink-0 items-center">
               <img src={img.logo} alt={site.name} width={803} height={177} className="h-9 w-auto sm:h-10" />
             </a>

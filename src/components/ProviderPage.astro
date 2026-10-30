@@ -38,7 +38,7 @@ const jsonLd = {
 <BaseLayout title={`${p.short}, ${p.name.split(', ').slice(1).join(', ')} | ${p.role} in Dallas & McKinney, TX`} description={p.seoDesc ?? p.blurb} jsonLd={jsonLd}>
   <!-- HERO -->
   <section class="on-dark grain relative isolate overflow-hidden bg-forest-950 pb-16 pt-32 text-ivory-50 md:pb-24 md:pt-40">
-    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(184,151,90,0.18),transparent_55%)]"></div>
+    <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(140,139,168,0.18),transparent_55%)]"></div>
     <div class="container-page grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
       <div>
         <nav aria-label="Breadcrumb" class="text-xs uppercase tracking-[0.18em] text-ivory-200/70">
@@ -134,7 +134,7 @@ const jsonLd = {
       </Reveal>
       <ul class:list={['mt-12 grid gap-4 sm:grid-cols-2', p.focus!.length > 4 ? 'lg:grid-cols-3' : 'lg:grid-cols-4']}>
         {p.focus!.map((e) => (
-          <li class="group relative overflow-hidden border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(7,26,21,0.5)]">
+          <li class="group relative overflow-hidden border border-forest-900/15 bg-ivory-50 p-7 transition-all duration-500 hover:-translate-y-1 hover:border-gold-500 hover:shadow-[0_24px_50px_-30px_rgba(17,13,51,0.5)]">
             <span aria-hidden="true" class="block h-2 w-2 rotate-45 bg-gold-500"></span>
             <h3 class="mt-5 text-2xl text-forest-900">{e.t}</h3>
             <p class="mt-2 text-sm text-muted">{e.x}</p>
