@@ -1,0 +1,73 @@
+name: Deploy to S3
+
+# Builds the site and syncs the result to the S3 bucket on every push to main.
+# Uses a normal IAM user access key stored in GitHub Secrets (no identity provider / OIDC).
+#
+# Repo secrets to add (Settings > Secrets and variables > Actions):
+#   AWS_ACCESS_KEY_ID        access key of the deploy-only IAM user
+#   AWS_SECRET_ACCESS_KEY    its secret key
+#   AWS_REGION               region of the bucket, for example us-east-1
+#   CLOUDFRONT_DISTRIBUTION_ID   (optional) only if the bucket sits behind CloudFront
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-s3
+  cancel-in-progress: true
+
+env:
+  S3_BUCKET: posture-perfect-website
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYS: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' && secrets.AWS_REGION != '' }}
+      HAS_CF: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Skip upload (AWS secrets not added yet)
+        if: env.HAS_KEYS != 'true'
+        run: echo "::warning::Build passed, but AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY or AWS_REGION is missing, so nothing was uploaded to S3."
+
+      - name: Configure AWS credentials
+        if: env.HAS_KEYS == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # Hashed assets (/_astro/*) can be cached for a year
+      - name: Upload assets
+        if: env.HAS_KEYS == 'true'
+        run: |
+          aws s3 sync dist "s3://${S3_BUCKET}" \
+            --exclude "*.html" --exclude "sitemap*.xml" --exclude "robots.txt" \
+            --cache-control "public,max-age=31536000,immutable" --delete
+
+      # Pages are always re-checked so updates show quickly
+      - name: Upload pages
+        if: env.HAS_KEYS == 'true'
+        run: |
+          aws s3 sync dist "s3://${S3_BUCKET}" \
+            --exclude "*" --include "*.html" --include "sitemap*.xml" --include "robots.txt" \
+            --cache-control "public,max-age=0,must-revalidate" --delete
+
+      - name: Clear CloudFront cache (if used)
+        if: env.HAS_KEYS == 'true' && env.HAS_CF == 'true'
+        env:
+          CF_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: aws cloudfront create-invalidation --distribution-id "$CF_ID" --paths "/*"
