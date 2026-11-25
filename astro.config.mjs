@@ -5,8 +5,8 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://www.example.com', // TODO: change to the real domain
-  integrations: [react(), sitemap()],
+  site: 'https://www.postureperfectwellnesscenter.com',
+  integrations: [react(), sitemap({ filter: (page) => !page.includes('/home-2') })],
   vite: {
     plugins: [tailwindcss()],
   },

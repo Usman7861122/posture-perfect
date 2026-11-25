@@ -11,9 +11,10 @@ interface Props {
   description?: string;
   jsonLd?: object | object[];
   theme?: string;
+  noindex?: boolean;
 }
 
-const { title, description = site.description, jsonLd, theme } = Astro.props;
+const { title, description = site.description, jsonLd, theme, noindex } = Astro.props;
 const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Chiropractor & Spine Care in Dallas & McKinney`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -28,10 +29,12 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
 
