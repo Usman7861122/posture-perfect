@@ -9,6 +9,7 @@ export default defineConfig({
   site: 'https://www.postureperfectwellnesscenter.com',
   trailingSlash: 'always',
   redirects,
+  build: { inlineStylesheets: 'always' },
   integrations: [react(), sitemap({ filter: (page) => !page.includes('/home-2') && !page.endsWith('/about/'), lastmod: new Date() })],
   vite: {
     plugins: [tailwindcss()],

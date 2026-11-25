@@ -1,0 +1,82 @@
+---
+// Home hero: plain HTML + CSS (no React). The text is in the first paint; only small
+// transform effects play. The video starts after the page is idle.
+import { site } from '../data/site';
+
+const VIDEO = { desktop: '/videos/hero.mp4', mobile: '/videos/hero-mobile.mp4', poster: '/videos/hero-poster.webp' };
+const lines = ['Eliminate Pain.', 'Restore Function.', 'Optimize Wellness.'];
+const stats = [
+  [`${site.rating} / 5`, `${site.reviewCount} patient reviews`],
+  [`Since ${site.since}`, 'Serving North Texas'],
+  ['2 Locations', 'Dallas & McKinney'],
+  ['One Team', 'Spine, sports & pain care'],
+];
+---
+
+<section class="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-forest-950 pb-60 pt-40 sm:pb-44">
+  <!-- first frame of the video, so there is never a different picture before it plays -->
+  <img src={VIDEO.poster} alt="" width="1280" height="720" fetchpriority="high" decoding="async" class="absolute inset-0 -z-20 h-full w-full object-cover" />
+  <video
+    id="hero-video"
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={VIDEO.poster}
+    aria-hidden="true"
+    tabindex="-1"
+    data-desktop={VIDEO.desktop}
+    data-mobile={VIDEO.mobile}
+    class="absolute inset-0 -z-[15] h-full w-full object-cover opacity-0 transition-opacity duration-1000"></video>
+  <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/75 via-forest-950/40 via-[45%] to-transparent to-[78%]"></div>
+
+  <div class="container-page hero-on-video relative">
+    <p class="eyebrow eyebrow-light hero-rise mb-8" style="--d:0.1s">Serving Dallas, McKinney &amp; North Texas since {site.since}</p>
+
+    <h1 class="max-w-3xl text-[clamp(2.25rem,5vw,4.5rem)] font-medium leading-[1.02] text-ivory-50">
+      {lines.map((line, i) => (
+        <span class={`hero-rise block pb-[0.12em] ${i === 2 ? 'italic gold-text' : ''}`} style={`--d:${0.15 + i * 0.12}s`}>{line}</span>
+      ))}
+    </h1>
+
+    <span aria-hidden="true" class="hero-line my-9 block h-px w-40 origin-left bg-gradient-to-r from-gold-400 to-transparent"></span>
+
+    <p class="hero-rise max-w-lg text-base leading-relaxed text-ivory-100/85 sm:text-lg" style="--d:0.2s">
+      Orthopedic and neurological evaluation, sports injury care, physiotherapy and chiropractic treatment, for the whole body, without a one-size-fits-all plan.
+    </p>
+
+    <div class="hero-rise mt-10 flex flex-col gap-3 sm:flex-row" style="--d:0.3s">
+      <a href="/contact/" class="btn-gold btn-book">Schedule an Evaluation</a>
+      <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
+    </div>
+  </div>
+
+  <!-- trust strip -->
+  <div class="hero-on-video absolute inset-x-0 bottom-0 border-t border-ivory-50/25 bg-transparent">
+    <div class="container-page grid grid-cols-2 gap-y-3 py-5 text-ivory-100 sm:grid-cols-4">
+      {stats.map(([a, b]) => (
+        <p class="text-sm">
+          <span class="block font-serif text-2xl text-gold-300">{a}</span>
+          <span class="text-ivory-200/75">{b}</span>
+        </p>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var v = document.getElementById('hero-video');
+    if (!v) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (navigator.connection && navigator.connection.saveData) return;
+    function go() {
+      v.src = innerWidth < 768 ? v.dataset.mobile : v.dataset.desktop;
+      v.addEventListener('playing', function () { v.style.opacity = '1'; }, { once: true });
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 2500 });
+    else setTimeout(go, 1200);
+  })();
+</script>

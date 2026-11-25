@@ -1,6 +1,7 @@
 // Full content for each service page. To add a service, copy one entry and change the text.
 // Each entry makes 3 pages: the general page + one page per office.
 import { site } from './site';
+import { stock } from './images';
 
 type Step = { title: string; text: string };
 
@@ -40,8 +41,8 @@ const spinal: Record<string, ServiceDetail> = {
     title: 'Spinal Decompression Therapy',
     tagline: 'Gentle, non-surgical care that takes pressure off your discs and nerves.',
     // new Shutterstock photos first, temporary old-site photos as fallback
-    heroImage: ['/images/stock/spinal-hero.jpg', '/images/services/spinal-decompression-page.webp', '/images/old/bg-2.webp'],
-    sideImage: ['/images/stock/spinal-side.jpg', '/images/services/spinal-decompression.webp'],
+    heroImage: [...stock('spinal-hero.jpg'), '/images/services/spinal-decompression-page.webp', '/images/old/bg-2.webp'],
+    sideImage: [...stock('spinal-side.jpg'), '/images/services/spinal-decompression.webp'],
     facts: [
       { k: 'Approach', v: 'Non-surgical' },
       { k: 'Each session', v: '20–45 minutes' },

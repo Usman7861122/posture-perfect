@@ -83,7 +83,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-ivory-50 focus:px-5 focus:py-3 focus:text-forest-900">
       Skip to content
     </a>
-    <Header client:load />
+    <Header client:idle />
     <main id="main">
       <slot />
     </main>

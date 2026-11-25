@@ -208,15 +208,13 @@ export default function Header() {
   return (
     <MotionRoot>
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.9, ease, delay: 0.2 }}
+        initial={false}
         className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4"
       >
         <div ref={wrap} className="relative mx-auto max-w-7xl">
           <div className={`flex h-16 items-center justify-between rounded-sm border px-4 pr-2 backdrop-blur-xl transition-all duration-500 sm:px-6 sm:pr-2.5 ${scrolled || open ? 'border-gold-500/40 bg-ivory-50/95 shadow-[0_10px_40px_-15px_rgba(17,13,51,0.35)]' : 'border-ivory-50/30 bg-ivory-50/90'}`}>
             <a href="/" aria-label={`${site.name}, home`} className="flex shrink-0 items-center">
-              <img src={img.logo} alt={site.name} width={803} height={177} className="h-9 w-auto sm:h-10" />
+              <img src={img.logo} alt={site.name} width={499} height={110} className="h-9 w-auto sm:h-10" />
             </a>
 
             <nav aria-label="Main" className="hidden xl:block">

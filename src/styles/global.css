@@ -176,3 +176,10 @@
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease-luxe) var(--reveal-delay, 0s), transform 0.8s var(--ease-luxe) var(--reveal-delay, 0s); }
 .js .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* Home hero: transform-only entrance, so the text is visible from the very first paint */
+@keyframes hero-rise { from { transform: translateY(14px); } to { transform: none; } }
+@keyframes hero-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.hero-rise { animation: hero-rise 0.9s var(--ease-luxe) both; animation-delay: var(--d, 0s); }
+.hero-line { animation: hero-line 1.2s var(--ease-luxe) both; animation-delay: 0.4s; }
+@media (prefers-reduced-motion: reduce) { .hero-rise, .hero-line { animation: none; } }

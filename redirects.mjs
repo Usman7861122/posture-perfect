@@ -9,6 +9,7 @@ const oldSlugs = [...blogTs.matchAll(/\bP\('([a-z0-9-]+)'/g)].map((m) => m[1]);
 
 // Old articles that had search traffic but are not in blog.ts
 const extraOldPosts = [
+  'understanding-the-link-between-insulin-dht-and-hair-loss-a-guide-to-prevention-and-solutions',
   'foot-drop-sciatica-leg-weakness-dallas-mckinney',
   'maximizing-your-workout-the-essential-role-of-amino-acids',
   'a2-bulgarian-yogurt-one-of-the-oldest-health-foods-in-the-world',
@@ -23,6 +24,7 @@ export const redirects = {
   '/about-us/': '/',
   '/about/': '/',
   '/services/': '/treatments/',
+  '/services/chiropractic-adjustments/': '/treatments/chiropractic-adjustments/',
   '/services/shockwave-therapy-eswt/': '/treatments/pain-management/',
   '/services/chiropractic-care/': '/treatments/chiropractic-adjustments/',
   '/services/spinal-decompression/': '/treatments/spinal-decompression-therapy/',
@@ -42,6 +44,12 @@ export const redirects = {
 // Old root-level blog posts: to the new article if it exists, otherwise to the blog index.
 for (const slug of [...new Set([...oldSlugs, ...extraOldPosts])]) {
   redirects[`/${slug}/`] = have.has(slug) ? `/blog/${slug}/` : '/blog/';
+}
+
+// Paginated WordPress archives (the first 40 pages are listed here; CloudFront catches the rest)
+for (let n = 1; n <= 40; n++) {
+  redirects[`/category/uncategorized/page/${n}/`] = '/blog/';
+  redirects[`/author/justin/page/${n}/`] = '/blog/';
 }
 
 // Paginated WordPress archives cannot be listed one by one: the CloudFront function sends these prefixes to /blog/.

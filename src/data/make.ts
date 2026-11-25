@@ -1,5 +1,6 @@
 // Helper that builds a full page entry from short content. The office pages are made automatically.
 import { site } from './site';
+import { stock } from './images';
 import type { ServiceDetail } from './services';
 
 type P = [string, string];
@@ -60,15 +61,15 @@ export function mk(o: Opts): ServiceDetail {
       cta: `Book at the ${l.city} office`,
     };
   }
-  const hero = [`/images/stock/${o.slug}-hero.jpg`, ...o.img];
+  const hero = [...stock(`${o.slug}-hero.jpg`), ...o.img];
   return {
     kind: o.kind,
     slug: o.slug,
     title: o.title,
     tagline: o.tagline,
     heroImage: hero,
-    sideImage: [`/images/stock/${o.slug}-side.jpg`, pick(o.slug, 1), ...o.img],
-    howImage: [`/images/stock/${o.slug}-how.jpg`, pick(o.slug, 2), ...o.img],
+    sideImage: [...stock(`${o.slug}-side.jpg`), pick(o.slug, 1), ...o.img],
+    howImage: [...stock(`${o.slug}-how.jpg`), pick(o.slug, 2), ...o.img],
     badge: o.badge ?? (c ? { big: 'Root cause', small: 'Evaluate · Treat · Prevent' } : { big: 'Personalized', small: 'Careful · Conservative · Team-based' }),
     ctaHeading: c ? 'Ready to move with less pain?' : 'Ready to feel better?',
     facts: c

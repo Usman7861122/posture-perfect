@@ -11,7 +11,7 @@ const slugify: Record<string, string> = {
   'Foot & Ankle Pain': 'foot-and-ankle-pain',
 };
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/react/Hero';
+import Hero from '../components/Hero.astro';
 import Reveal from '../components/Reveal.astro';
 import AboutVisual from '../components/react/AboutVisual';
 import ServicesFlip from '../components/react/ServicesFlip';
@@ -58,7 +58,7 @@ const jsonLd = {
 
 <BaseLayout theme="home" jsonLd={jsonLd}>
   <!-- 1. HERO -->
-  <Hero client:load />
+  <Hero />
 
   <!-- 2. ABOUT -->
   <section id="about" class="section relative overflow-hidden">

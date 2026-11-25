@@ -24,7 +24,7 @@ export default function ApproachTabs() {
               className={`group relative block w-full flex-1 border-b border-forest-900/15 py-6 text-left transition-colors ${i === active ? 'text-forest-900' : 'text-forest-900/50 hover:text-forest-900'}`}
             >
               <span className="flex items-center gap-5">
-                <span className="font-serif text-3xl text-gold-500">{String(i + 1).padStart(2, '0')}</span>
+                <span className="font-serif text-3xl text-gold-700">{String(i + 1).padStart(2, '0')}</span>
                 <span className="font-serif text-3xl sm:text-4xl">{a.key}</span>
               </span>
               <AnimatePresence initial={false}>
