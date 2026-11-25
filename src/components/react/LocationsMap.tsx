@@ -66,7 +66,7 @@ export default function LocationsMap({ only }: { only?: string }) {
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href={dir} target="_blank" rel="noopener noreferrer" className="btn-dark">Get Directions</a>
-                <a href="/contact" className="btn-outline">Book Here</a>
+                <a href="/contact/" className="btn-outline">Book Here</a>
               </div>
             </motion.div>
           </AnimatePresence>

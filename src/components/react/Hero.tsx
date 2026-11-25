@@ -104,7 +104,7 @@ function HeroInner() {
           transition={{ duration: 1, ease, delay: 1.8 }}
           className="mt-10 flex flex-col gap-3 sm:flex-row"
         >
-          <a href="/contact" className="btn-gold btn-book">Schedule an Evaluation</a>
+          <a href="/contact/" className="btn-gold btn-book">Schedule an Evaluation</a>
           <a href={site.phoneHref} className="btn-outline-light">Call {site.phone}</a>
         </motion.div>
       </motion.div>

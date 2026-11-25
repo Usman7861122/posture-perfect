@@ -105,7 +105,7 @@ const jsonLd = {
       <p class="max-w-xl text-base leading-relaxed text-ivory-100/85 sm:text-lg">{local ? local.intro : s.tagline}</p>
 
       <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
+        <a href="/contact/" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
         <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
       </div>
     </div>
@@ -216,7 +216,7 @@ const jsonLd = {
         <p class="eyebrow">Your journey</p>
         <h2 class="display mt-5 text-forest-900">{s.expectTitle}</h2>
         {local && <p class="lead mt-6">{local.visitText}</p>}
-        <a href="/contact" class="btn-dark btn-book mt-9">{local ? local.cta : 'Schedule an Evaluation'}</a>
+        <a href="/contact/" class="btn-dark btn-book mt-9">{local ? local.cta : 'Schedule an Evaluation'}</a>
       </Reveal>
       <Reveal client:visible>
         <ol class="relative space-y-10 border-l border-gold-500/50 pl-8 sm:pl-10">
@@ -308,7 +308,7 @@ const jsonLd = {
       <h2 class="display !text-ivory-50">{s.ctaHeading ?? 'Ready to feel better?'}</h2>
       <p class="lead mt-6">{loc ? `Book your evaluation at our ${loc.name} office.` : 'Start with an evaluation and leave with a plan.'}</p>
       <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-        <a href="/contact" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
+        <a href="/contact/" class="btn-gold btn-book">{local ? local.cta : 'Schedule an Evaluation'}</a>
         <a href={site.phoneHref} class="btn-outline-light">Call {site.phone}</a>
       </div>
     </Reveal>

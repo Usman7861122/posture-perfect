@@ -37,6 +37,8 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+      - name: SEO checks (titles, descriptions, trailing slashes)
+        run: npm run seo:check
 
       - name: Skip upload (AWS secrets not added yet)
         if: env.HAS_KEYS != 'true'

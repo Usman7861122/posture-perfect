@@ -12,10 +12,39 @@ interface Props {
   jsonLd?: object | object[];
   theme?: string;
   noindex?: boolean;
+  image?: string;
+  imageAlt?: string;
 }
 
-const { title, description = site.description, jsonLd, theme, noindex } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | Chiropractor & Spine Care in Dallas & McKinney`;
+const { title, description = site.description, jsonLd, theme, noindex, image = '/images/og-default.jpg', imageAlt = 'The Posture Perfect Wellness Center care team in the clinic' } = Astro.props;
+const ogImage = new URL(image, Astro.site).toString();
+// Titles: 30-60 characters. Brand suffix is short, and dropped when the title would be too long.
+const SUFFIX = ' | Posture Perfect';
+const fitTitle = (t?: string) => {
+  if (!t) return 'Chiropractor in Dallas & McKinney | Posture Perfect';
+  let out = t + SUFFIX;
+  if (out.length > 60) out = t;
+  if (out.length > 60) {
+    const cut = out.slice(0, 60);
+    out = cut.slice(0, Math.max(cut.lastIndexOf(' '), 30)).replace(/[\s,:;&|-]+$/, '');
+  }
+  return out;
+};
+// Descriptions: 120-155 characters. Long ones are cut at a sentence or word; short ones get a short closing line.
+const TAIL = ' Call 972-792-0204 or book online at our Dallas and McKinney offices.';
+const fitDescription = (d: string) => {
+  d = d.replace(/\s+/g, ' ').trim();
+  if (d.length > 155) {
+    const cut = d.slice(0, 155);
+    const sentence = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('? '));
+    d = sentence >= 110 ? cut.slice(0, sentence + 1) : cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,:;&|-]+$/, '') + '.';
+  }
+  if (d.length < 120 && (d + TAIL).length <= 155) d += TAIL;
+  else if (d.length < 120) d = (d.replace(/[.\s]+$/, '') + '. Posture Perfect Wellness Center, Dallas and McKinney, TX.').slice(0, 155);
+  return d;
+};
+const pageTitle = fitTitle(title);
+const metaDescription = fitDescription(description);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -27,16 +56,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="theme-color" content="#1d174a" />
     <meta name="google-site-verification" content="c-sQ-qFIRZXhQKyyvI9cbREP3OI3qCi6QoKW4goWct4" />
     <title>{pageTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

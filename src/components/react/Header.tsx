@@ -129,7 +129,7 @@ function Panel({ k, close }: { k: Key; close: () => void }) {
     );
 
   return (
-    <Frame eyebrow="Contact" title="Two offices, close to you." text="Call us or book online. We will confirm your visit by phone." cta={{ label: 'Book online', href: '/contact' }} onNavigate={close}>
+    <Frame eyebrow="Contact" title="Two offices, close to you." text="Call us or book online. We will confirm your visit by phone." cta={{ label: 'Book online', href: '/contact/' }} onNavigate={close}>
       <div className="grid grid-cols-2 gap-5">
         {site.locations.map((l) => (
           <a key={l.id} href={`/locations/${l.slug}/`} onClick={close} className="group/l block border border-forest-900/15 p-6 transition-colors duration-300 hover:border-gold-500 hover:bg-ivory-100">
@@ -259,7 +259,7 @@ export default function Header() {
 
             <div className="flex items-center gap-2">
               <a href={site.phoneHref} className="hidden px-3 text-sm font-medium text-forest-900 hover:text-gold-700 2xl:block">{site.phone}</a>
-              <a href="/contact" className="btn-dark btn-book hidden !min-h-11 !px-6 sm:inline-flex">Book Online</a>
+              <a href="/contact/" className="btn-dark btn-book hidden !min-h-11 !px-6 sm:inline-flex">Book Online</a>
               <button
                 type="button"
                 onClick={() => setMobile((v) => !v)}
@@ -346,7 +346,7 @@ export default function Header() {
               </MobileSection>
             </ul>
             <div className="mt-8 flex flex-col gap-3">
-              <a href="/contact" onClick={closeMobile} className="btn-gold btn-book">Book Online</a>
+              <a href="/contact/" onClick={closeMobile} className="btn-gold btn-book">Book Online</a>
               <a href={site.phoneHref} className="btn-outline-light">Call {site.phone}</a>
             </div>
           </motion.div>
