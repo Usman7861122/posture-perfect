@@ -1,8 +1,16 @@
 @import "tailwindcss";
+@import "@fontsource/cormorant-garamond/latin-400.css";
+@import "@fontsource/cormorant-garamond/latin-500.css";
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/cormorant-garamond/latin-700.css";
+@import "@fontsource/cormorant-garamond/latin-400-italic.css";
+@import "@fontsource/cormorant-garamond/latin-500-italic.css";
+@import "@fontsource/cormorant-garamond/latin-600-italic.css";
+@import "@fontsource-variable/dm-sans/opsz.css";
 
 @theme {
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans Variable", "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
   --color-ivory-50: #fbfaff;
   --color-ivory-100: #f3f1fa;
@@ -163,3 +171,8 @@
 .theme-home2 header > div > div { box-shadow: none; border-color: transparent; background: transparent; }
 /* Home (original): same larger logo as Home 2 */
 .theme-home header a[aria-label$=", home"] img { height: 3.4rem; }
+
+/* Scroll reveal (static version of the React Reveal; script in BaseLayout adds .in) */
+.js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease-luxe) var(--reveal-delay, 0s), transform 0.8s var(--ease-luxe) var(--reveal-delay, 0s); }
+.js .reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal { opacity: 1; transform: none; transition: none; } }

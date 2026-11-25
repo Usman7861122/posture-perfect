@@ -57,7 +57,7 @@ export default function ApproachTabs() {
               transition={{ duration: 0.55, ease }}
               className="relative h-full overflow-hidden rounded-sm ph"
             >
-              <img src={cur.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+              <img src={cur.image} alt="" width="1200" height="800" loading="lazy" className="absolute inset-0 h-full w-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-forest-950/55 to-forest-950/10" />
               <div className="relative flex h-full min-h-[380px] flex-col justify-end p-7 sm:p-10">
                 <h3 className="max-w-md text-3xl text-ivory-50 sm:text-4xl">{cur.title}</h3>

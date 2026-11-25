@@ -5,7 +5,7 @@ import { ease } from '../../lib/motion';
 import { site } from '../../data/site';
 
 // Hero video: the last 10 seconds of the Higgsfield clip, in /public/videos.
-const VIDEO = { desktop: '/videos/hero.mp4', mobile: '/videos/hero-mobile.mp4', poster: '/videos/hero-poster.jpg' };
+const VIDEO = { desktop: '/videos/hero.mp4', mobile: '/videos/hero-mobile.mp4', poster: '/videos/hero-poster.webp' };
 
 const lines = ['Eliminate Pain.', 'Restore Function.', 'Optimize Wellness.'];
 

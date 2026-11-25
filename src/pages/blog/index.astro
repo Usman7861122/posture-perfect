@@ -41,7 +41,7 @@ const PAGE = 12;
       <Reveal client:visible>
         <a href={href(featured.slug)} target={ext(featured.slug) ? '_blank' : undefined} rel={ext(featured.slug) ? 'noopener' : undefined} class="group grid overflow-hidden border border-forest-900/15 bg-ivory-50 transition-all duration-500 hover:border-gold-500 hover:shadow-[0_30px_60px_-35px_rgba(17,13,51,0.55)] md:grid-cols-[1.1fr_1fr]">
           <span class="relative block min-h-[260px] overflow-hidden bg-forest-800">
-            {featured.image && <img src={featured.image} alt="" loading="eager" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-105" onerror="this.style.display='none'" />}
+            {featured.image && <img src={featured.image} alt="" width="1200" height="800" loading="eager" class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-[var(--ease-luxe)] group-hover:scale-105" onerror="this.style.display='none'" />}
           </span>
           <span class="flex flex-col justify-center p-8 sm:p-12">
             <span class="text-xs font-medium uppercase tracking-[0.25em] text-gold-700">Latest · {featured.tag}</span>

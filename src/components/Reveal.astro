@@ -1,0 +1,6 @@
+---
+// Static fade-up when scrolled into view. Same look as the React Reveal, but no JavaScript island.
+// The tiny observer script lives in BaseLayout. Without JavaScript the content is simply visible.
+const { class: cls, delay = 0 } = Astro.props;
+---
+<div class:list={['reveal', cls]} style={delay ? `--reveal-delay:${delay}s` : undefined}><slot /></div>

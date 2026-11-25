@@ -22,7 +22,7 @@ type Opts = {
   badge?: { big: string; small: string };
 };
 
-const pool = ['/images/clinic/about.webp', '/images/old/bg-3.webp', '/images/clinic/clinic-1.png', '/images/old/bg-2.webp', '/images/clinic/specialties.webp', '/images/old/bg-4.webp'];
+const pool = ['/images/clinic/about.webp', '/images/old/bg-3.webp', '/images/clinic/clinic-1.webp', '/images/old/bg-2.webp', '/images/clinic/specialties.webp', '/images/old/bg-4.webp'];
 const pick = (slug: string, n: number) => pool[(slug.length * 7 + n * 2) % pool.length];
 
 const step = ([title, text]: P) => ({ title, text });

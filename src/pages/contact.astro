@@ -1,10 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/react/ContactForm';
+import LocationsMap from '../components/react/LocationsMap';
 import { site } from '../data/site';
+
+const dirUrl = (q: string) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
 ---
 
-<BaseLayout title="Book an Appointment" description="Request an appointment at Posture Perfect Wellness Center in Dallas or McKinney, Texas.">
+<BaseLayout title="Book an Appointment" description="Book an appointment at Posture Perfect Wellness Center in Dallas or McKinney, TX. Call 972-792-0204 or send a request and our team will call to confirm.">
   <section class="section pt-40 md:pt-48">
     <div class="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
       <div>
@@ -18,6 +21,7 @@ import { site } from '../data/site';
             <address class="border-l border-gold-500 pl-5 not-italic">
               <p class="font-serif text-2xl text-forest-900">{l.name}</p>
               <p class="mt-1 text-muted">{l.street}, {l.cityLine}</p>
+              <p class="mt-2 text-sm"><a href={dirUrl(l.query)} target="_blank" rel="noopener" class="text-forest-900 underline underline-offset-4 hover:text-gold-700">Get directions</a></p>
             </address>
           ))}
         </div>
@@ -25,6 +29,37 @@ import { site } from '../data/site';
       <div class="rounded-sm border border-gold-500/30 bg-ivory-100 p-6 sm:p-10">
         <ContactForm client:load />
       </div>
+    </div>
+  </section>
+
+  <section class="section bg-ivory-100 pt-14 md:pt-20">
+    <div class="container-page grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+      <div>
+        <p class="eyebrow">How booking works</p>
+        <h2 class="display mt-5 text-forest-900">Simple, <em class="text-gold-600">and personal.</em></h2>
+        <ol class="mt-8 space-y-5 text-muted">
+          <li><span class="font-serif text-2xl text-forest-900">1. Send your request.</span><br />Use the form on this page, or call {site.phone} and speak with our team.</li>
+          <li><span class="font-serif text-2xl text-forest-900">2. We call to confirm.</span><br />Our team phones you to confirm a time that suits you at the Dallas or McKinney office.</li>
+          <li><span class="font-serif text-2xl text-forest-900">3. Come in for your evaluation.</span><br />Your first visit starts with a careful look at what is causing your pain, so the plan fits you.</li>
+        </ol>
+      </div>
+      <div>
+        <p class="text-sm uppercase tracking-[0.2em] text-gold-700">Office hours (both locations)</p>
+        <table class="mt-4 w-full max-w-md text-left">
+          <tbody>
+            {[1, 2, 3, 4, 5, 6, 0].map((d) => (
+              <tr class="border-b border-forest-900/10">
+                <th scope="row" class="py-3 pr-6 text-sm font-normal text-muted">{site.hours[d].day}</th>
+                <td class="py-3 text-forest-900">{site.hours[d].time}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="mt-6 max-w-md text-sm text-muted">If your pain is severe or you have sudden weakness, numbness or loss of bladder or bowel control, seek emergency medical care instead of waiting for an appointment.</p>
+      </div>
+    </div>
+    <div class="container-page mt-16">
+      <LocationsMap client:visible />
     </div>
   </section>
 </BaseLayout>

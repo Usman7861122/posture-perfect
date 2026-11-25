@@ -100,7 +100,7 @@ const list: ServiceDetail[] = [
     slug: 'neck-pain',
     title: 'Neck Pain',
     tagline: 'Ease tension, restore motion and build better posture habits.',
-    img: ['/images/conditions/neck-shoulder.jpg'],
+    img: ['/images/conditions/neck-shoulder.webp'],
     whatTitle: 'What is neck pain?',
     what: [
       'Neck pain is pain or stiffness in the neck, sometimes spreading to the shoulders, upper back or arms. It can limit how far you can turn your head.',
@@ -130,7 +130,7 @@ const list: ServiceDetail[] = [
     slug: 'headaches-migraines',
     title: 'Headaches & Migraines',
     tagline: 'Look for neck, joint and posture causes of recurring headaches.',
-    img: ['/images/conditions/neck-shoulder.jpg', '/images/old/bg-2.webp'],
+    img: ['/images/conditions/neck-shoulder.webp', '/images/old/bg-2.webp'],
     whatTitle: 'What are headaches and migraines?',
     what: [
       'Headaches are pain in the head, face or neck. Migraines are stronger and may come with nausea, light sensitivity or visual changes.',
@@ -160,7 +160,7 @@ const list: ServiceDetail[] = [
     slug: 'shoulder-pain',
     title: 'Shoulder Pain',
     tagline: 'Restore pain-free movement for reaching, lifting and sleeping.',
-    img: ['/images/conditions/neck-shoulder.jpg'],
+    img: ['/images/conditions/neck-shoulder.webp'],
     whatTitle: 'What is shoulder pain?',
     what: [
       'The shoulder moves in more directions than any other joint, which makes it easy to strain. Pain can come from muscles, tendons, the joint itself, or even the neck.',

@@ -64,10 +64,10 @@ export const conditions = [
 ];
 
 export const team = [
-  { name: 'Yaron Lohr, DC, CFSA', role: 'Chiropractor, Clinic Director', image: '/images/team/yaron-lohr.png', path: '/our-team/yaron-lohr-dc-cfsa/' },
-  { name: 'Sharan Kaur, DC', role: 'Chiropractor', image: '/images/team/sharan-kaur.jpeg', path: '/our-team/sharan-kaur-dc/' },
-  { name: 'Andrew Kuhn, DC', role: 'Chiropractor', image: '/images/team/andrew-kuhn.jpeg', path: '/our-team/andrew-kuhn-dc/' },
-  { name: 'Venkat Sethuraman, MD', role: 'Spine Surgeon', image: '/images/team/venkat-sethuraman.png', path: '/our-team/venkat-sethuraman-md/' },
+  { name: 'Yaron Lohr, DC, CFSA', role: 'Chiropractor, Clinic Director', image: '/images/team/yaron-lohr.webp', path: '/our-team/yaron-lohr-dc-cfsa/' },
+  { name: 'Sharan Kaur, DC', role: 'Chiropractor', image: '/images/team/sharan-kaur.webp', path: '/our-team/sharan-kaur-dc/' },
+  { name: 'Andrew Kuhn, DC', role: 'Chiropractor', image: '/images/team/andrew-kuhn.webp', path: '/our-team/andrew-kuhn-dc/' },
+  { name: 'Venkat Sethuraman, MD', role: 'Spine Surgeon', image: '/images/team/venkat-sethuraman.webp', path: '/our-team/venkat-sethuraman-md/' },
 ].map((m) => ({ ...m, fallback: '/#team', live: true }));
 
 export const href = (i: { path: string; fallback: string; live?: boolean }) => (i.live ? i.path : i.fallback);

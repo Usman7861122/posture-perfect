@@ -11,7 +11,7 @@ const slugify: Record<string, string> = {
   'Foot & Ankle Pain': 'foot-and-ankle-pain',
 };
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Reveal from '../components/react/Reveal';
+import Reveal from '../components/Reveal.astro';
 import AboutVisual from '../components/react/AboutVisual';
 import ServicesFlip from '../components/react/ServicesFlip';
 import ConditionsGrid from '../components/react/ConditionsGrid';
@@ -58,7 +58,7 @@ const jsonLd = {
 <BaseLayout theme="home2" noindex title="Home 2 | Chiropractor & Spine Care in Dallas & McKinney" jsonLd={jsonLd}>
   <!-- 1. HERO -->
   <section class="hero2 relative isolate overflow-hidden bg-ivory-200">
-    <img src="/images/home2/hero-team.jpg" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1024" fetchpriority="high" class="absolute inset-x-auto bottom-0 right-0 top-[80px] -z-20 hidden h-[calc(100%-80px)] w-[86%] object-cover object-[right_top] md:block" />
+    <img src="/images/home2/hero-team.webp" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1024" fetchpriority="high" class="absolute inset-x-auto bottom-0 right-0 top-[80px] -z-20 hidden h-[calc(100%-80px)] w-[86%] object-cover object-[right_top] md:block" />
     <div aria-hidden="true" class="absolute inset-0 -z-10 hidden md:block md:bg-gradient-to-r md:from-ivory-200 md:from-[14%] md:to-transparent md:to-[24%]"></div>
     <div class="container-page flex flex-col justify-center pb-10 pt-32 md:min-h-[100svh] md:pb-36">
       <div class="max-w-lg">
@@ -71,7 +71,7 @@ const jsonLd = {
         </div>
       </div>
     </div>
-    <img src="/images/home2/hero-team.jpg" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1024" class="block aspect-[3/2] w-full object-cover object-[75%_center] md:hidden" />
+    <img src="/images/home2/hero-team.webp" alt="Three Posture Perfect clinicians standing together in the clinic" width="1536" height="1024" class="block aspect-[3/2] w-full object-cover object-[75%_center] md:hidden" />
     <div class="relative border-t border-forest-900/10 md:absolute md:inset-x-0 md:bottom-0 bg-ivory-50/80 backdrop-blur-md">
       <div class="container-page grid grid-cols-2 gap-y-3 py-4 sm:grid-cols-4">
         {[[`${site.rating} / 5`, `${site.reviewCount} patient reviews`], [`Since ${site.since}`, 'Serving North Texas'], ['2 Locations', 'Dallas & McKinney'], ['One Team', 'Spine, sports & pain care']].map(([a, b]) => (
@@ -84,7 +84,7 @@ const jsonLd = {
   <!-- 2. ABOUT -->
   <section id="about" class="section relative overflow-hidden">
     <div class="container-page relative grid gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch lg:gap-20">
-      <Reveal client:visible>
+      <Reveal>
         <p class="eyebrow">About Us</p>
         <h2 class="display mt-5 text-forest-900">Much more than a <em class="text-gold-600">traditional</em> chiropractic clinic.</h2>
         <p class="lead mt-7">
@@ -121,18 +121,18 @@ const jsonLd = {
   <!-- 3. TREATMENTS -->
   <section id="treatments" class="section bg-ivory-100">
     <div class="container-page">
-      <Reveal client:visible className="mx-auto max-w-3xl text-center">
+      <Reveal class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">Treatments</p>
         <h2 class="display mt-5 text-forest-900">Care for the <em class="text-gold-600">whole</em> body.</h2>
         <p class="lead mt-6">Hover over a card, or tap it on your phone, to see how each treatment can help.</p>
       </Reveal>
       <div class="mt-12"><ServicesFlip client:visible /></div>
-      <Reveal client:visible className="mt-14 flex flex-wrap justify-center gap-3">
+      <Reveal class="mt-14 flex flex-wrap justify-center gap-3">
         {moreServices.map((s) => (
           <a href={`/treatments/${slugify[s]}/`} class="rounded-sm border border-forest-900/20 px-5 py-2 text-sm text-forest-900 transition-colors hover:border-forest-900 hover:bg-forest-900 hover:text-ivory-50">{s}</a>
         ))}
       </Reveal>
-      <Reveal client:visible className="mt-10 text-center">
+      <Reveal class="mt-10 text-center">
         <a href="/treatments/" class="btn-dark">View All Treatments</a>
       </Reveal>
     </div>
@@ -141,7 +141,7 @@ const jsonLd = {
   <!-- 4. CONDITIONS -->
   <section id="conditions" class="section">
     <div class="container-page">
-      <Reveal client:visible className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <Reveal class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div class="max-w-2xl">
           <p class="eyebrow">Conditions We Treat</p>
           <h2 class="display mt-5 text-forest-900">Whatever is holding you back, <em class="text-gold-600">we can help.</em></h2>
@@ -149,7 +149,7 @@ const jsonLd = {
         <a href="/condition-we-treat/" class="btn-outline self-start md:self-auto">All Conditions</a>
       </Reveal>
       <div class="mt-14"><ConditionsGrid client:visible /></div>
-      <Reveal client:visible className="mt-10 flex flex-wrap items-center gap-3">
+      <Reveal class="mt-10 flex flex-wrap items-center gap-3">
         <span class="mr-2 text-sm uppercase tracking-[0.2em] text-gold-700">Also treating</span>
         {moreConditions.map((s) => (
           <a href={`/condition-we-treat/${slugify[s]}/`} class="rounded-sm bg-ivory-200 px-5 py-2 text-sm text-forest-900 transition-colors hover:bg-forest-900 hover:text-ivory-50">{s}</a>
@@ -162,7 +162,7 @@ const jsonLd = {
   <section id="why" class="section bg-ivory-100">
     <div class="container-page grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
       <div class="lg:sticky lg:top-32 lg:self-start">
-        <Reveal client:visible>
+        <Reveal>
           <p class="eyebrow">Why Patients Choose Posture Perfect</p>
           <h2 class="display mt-5 text-forest-900">A different kind of <em class="text-gold-600">care.</em></h2>
           <p class="lead mt-6">Seven reasons our patients trust us with their spine, their sport and their recovery.</p>
@@ -183,7 +183,7 @@ const jsonLd = {
     <div aria-hidden="true" class="pointer-events-none absolute -right-40 -top-40 h-[34rem] w-[34rem] rotate-45 rounded-sm border border-gold-500/20"></div>
     <div aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 h-[26rem] w-[26rem] rotate-45 rounded-sm border border-gold-500/20"></div>
     <div class="container-page relative">
-      <Reveal client:visible className="max-w-4xl">
+      <Reveal class="max-w-4xl">
         <p class="eyebrow">Posture Perfect Wellness Center</p>
         <h2 class="display mt-6 !text-ivory-50">One team. <em class="gold-text">Every part of your recovery.</em></h2>
         <p class="lead mt-8 max-w-3xl">
@@ -207,20 +207,20 @@ const jsonLd = {
   <!-- 7. TEAM -->
   <section id="team" class="section">
     <div class="container-page">
-      <Reveal client:visible className="mx-auto max-w-3xl text-center">
+      <Reveal class="mx-auto max-w-3xl text-center">
         <p class="eyebrow">Our Providers</p>
         <h2 class="display mt-5 text-forest-900">Multidisciplinary experts, <em class="text-gold-600">one plan.</em></h2>
         <p class="lead mt-6">Chiropractic physicians, medical providers and orthopedic spine expertise, working together for you.</p>
       </Reveal>
       <div class="mt-12"><TeamGrid client:visible /></div>
-      <Reveal client:visible className="mt-12 text-center"><a href="/our-team/" class="btn-outline">View All Providers</a></Reveal>
+      <Reveal class="mt-12 text-center"><a href="/our-team/" class="btn-outline">View All Providers</a></Reveal>
     </div>
   </section>
 
   <!-- 8. APPROACH -->
   <section id="approach" class="section bg-ivory-100">
     <div class="container-page">
-      <Reveal client:visible className="mb-14 max-w-3xl">
+      <Reveal class="mb-14 max-w-3xl">
         <p class="eyebrow">Our Treatment &amp; Rehabilitation Approach</p>
         <h2 class="display mt-5 text-forest-900">Root cause first. <em class="text-gold-600">Always.</em></h2>
       </Reveal>
@@ -233,7 +233,7 @@ const jsonLd = {
     <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.phases)}`}></div>
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/80"></div>
     <div class="container-page">
-      <Reveal client:visible className="mx-auto mb-12 max-w-3xl text-center">
+      <Reveal class="mx-auto mb-12 max-w-3xl text-center">
         <p class="eyebrow">Our Phased Progression of Care</p>
         <h2 class="display mt-5 !text-ivory-50">From pain to <em class="gold-text">resilience</em>, step by step.</h2>
         <p class="lead mt-6">A clear roadmap, so you always know where you are and what comes next.</p>
@@ -247,7 +247,7 @@ const jsonLd = {
     <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.reviews)}`}></div>
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-b from-forest-950/70 via-forest-950/40 to-forest-950/70"></div>
     <div class="container-page">
-      <Reveal client:visible className="mx-auto mb-10 max-w-3xl text-center">
+      <Reveal class="mx-auto mb-10 max-w-3xl text-center">
         <p class="eyebrow">Patient Reviews</p>
         <h2 class="display mt-5 !text-ivory-50">In their <em class="gold-text">own words.</em></h2>
       </Reveal>
@@ -263,11 +263,11 @@ const jsonLd = {
   <!-- 11. UNLOCKING THE PAIN CODE -->
   <section id="book" class="on-dark grain relative overflow-hidden bg-forest-800 py-16 text-ivory-50 md:py-24">
     <div class="container-page grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-      <Reveal client:visible className="relative mx-auto w-full max-w-xs [perspective:1200px]">
+      <Reveal class="relative mx-auto w-full max-w-xs [perspective:1200px]">
         <div aria-hidden="true" class="absolute inset-0 -z-10 translate-x-5 translate-y-5 rounded-sm border border-gold-500/60"></div>
         <img src={img.book} alt="Book cover: Unlocking the Pain Code by Dr. Yaron Lohr" width="500" height="750" loading="lazy" class="w-full rounded-sm shadow-[0_40px_80px_-20px_rgba(0,0,0,0.7)] transition-transform duration-700 ease-[var(--ease-luxe)] hover:[transform:rotateY(-12deg)_rotateX(4deg)_scale(1.03)]" onerror="this.style.minHeight='360px';this.style.background='#281f5e'" />
       </Reveal>
-      <Reveal client:visible>
+      <Reveal>
         <p class="eyebrow">New Book by Dr. Yaron Lohr</p>
         <h2 class="display mt-5 !text-ivory-50">Unlocking the <em class="gold-text">Pain Code</em></h2>
         <p class="lead mt-7 max-w-xl">
@@ -284,14 +284,14 @@ const jsonLd = {
   <!-- 12. BLOG -->
   <section id="blog" class="section">
     <div class="container-page">
-      <Reveal client:visible className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <Reveal class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
         <div class="max-w-2xl">
           <p class="eyebrow">From Our Blog</p>
           <h2 class="display mt-5 text-forest-900">Learn how to <em class="text-gold-600">move better.</em></h2>
         </div>
         <a href={blogUrl} class="btn-outline self-start md:self-auto">All Articles</a>
       </Reveal>
-      <Reveal client:visible className="mt-14">
+      <Reveal class="mt-14">
         <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {blog.map((p) => (
             <li class="group">
@@ -316,13 +316,13 @@ const jsonLd = {
     <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.specialties)}`}></div>
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-r from-forest-950/90 via-forest-950/65 to-forest-950/30"></div>
     <div class="container-page grid items-center gap-12 lg:grid-cols-[1fr_1fr]">
-      <Reveal client:visible>
+      <Reveal>
         <p class="eyebrow">Our Specialties</p>
         <h2 class="display mt-5 !text-ivory-50">Focused expertise, <em class="gold-text">proven results.</em></h2>
         <p class="lead mt-6 max-w-lg">From the first evaluation to your return to the life you love, every specialty is under one roof.</p>
         <a href="/contact/" class="btn-gold btn-book mt-9">Book Your Visit</a>
       </Reveal>
-      <Reveal client:visible>
+      <Reveal>
         <ul class="divide-y divide-ivory-50/15 rounded-sm border border-ivory-50/20 bg-forest-950/40 px-6 backdrop-blur-md sm:px-8">
           {specialties.map((s, i) => (
             <li class="group flex min-h-16 items-center gap-5 py-4 transition-all duration-500 hover:pl-3">
@@ -338,7 +338,7 @@ const jsonLd = {
   <!-- 14. LOCATIONS -->
   <section id="locations" class="section bg-ivory-100">
     <div class="container-page">
-      <Reveal client:visible className="mx-auto mb-14 max-w-3xl text-center">
+      <Reveal class="mx-auto mb-14 max-w-3xl text-center">
         <p class="eyebrow">Our Locations</p>
         <h2 class="display mt-5 text-forest-900">Two offices, <em class="text-gold-600">close to you.</em></h2>
       </Reveal>
@@ -349,7 +349,7 @@ const jsonLd = {
   <!-- 15. FAQ -->
   <section id="faq" class="section">
     <div class="container-page grid gap-14 lg:grid-cols-[0.7fr_1.3fr] lg:gap-24">
-      <Reveal client:visible>
+      <Reveal>
         <p class="eyebrow">FAQs</p>
         <h2 class="display mt-5 text-forest-900">Good questions, <em class="text-gold-600">clear answers.</em></h2>
         <p class="lead mt-6">Still unsure? Call us at <a href={site.phoneHref} class="text-forest-900 underline decoration-gold-500 underline-offset-4">{site.phone}</a>.</p>
@@ -362,7 +362,7 @@ const jsonLd = {
   <section class="on-dark relative isolate overflow-hidden py-16 text-center text-ivory-50 md:py-24">
     <div aria-hidden="true" class="parallax-fixed absolute inset-0 -z-20 bg-forest-950" style={`background-image: ${bg(img.cta)}`}></div>
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-forest-950/80"></div>
-    <Reveal client:visible className="container-page max-w-3xl">
+    <Reveal class="container-page max-w-3xl">
       <h2 class="display !text-ivory-50">Ready to feel <em class="gold-text">better?</em></h2>
       <p class="lead mt-6">Start with an evaluation and leave with a plan.</p>
       <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">

@@ -14,7 +14,7 @@ export const conditions = [
   { title: 'Low Back Pain', slug: 'low-back-pain', image: '/images/conditions/low-back-pain.webp', text: 'Find the cause behind stiff, aching or sharp back pain and fix it at the source.' },
   { title: 'Sciatica & Nerve Pain', slug: 'sciatica-nerve-pain', image: '/images/conditions/sciatica.webp', text: 'Relief for pain, numbness and tingling that travel down the leg.' },
   { title: 'Disc Injuries', slug: 'disc-injuries', image: '/images/conditions/disc-injuries.webp', text: 'Careful, non-surgical care for bulging and herniated discs.' },
-  { title: 'Neck & Shoulder Pain', slug: 'neck-pain', image: '/images/conditions/neck-shoulder.jpg', text: 'Ease tension, restore motion and build better posture habits.' },
+  { title: 'Neck & Shoulder Pain', slug: 'neck-pain', image: '/images/conditions/neck-shoulder.webp', text: 'Ease tension, restore motion and build better posture habits.' },
   { title: 'Auto Accident Injuries', slug: 'auto-accident-personal-injuries', image: '/images/conditions/auto-accident.webp', text: 'Thorough evaluation and rehab after whiplash and collision injuries.' },
   { title: 'Muscle Strains & Sprains', slug: 'muscle-strains-ligament-sprains', image: '/images/conditions/muscle-strains.webp', text: 'Heal muscle and ligament injuries and return to activity safely.' },
   { title: 'Hip, Knee & Foot Pain', slug: 'hip-pain', image: '/images/conditions/hip-pain.webp', text: 'Treatment for the joints that carry you through every day.' },
@@ -47,10 +47,10 @@ export const approach = [
 ];
 
 export const team = [
-  { name: 'Yaron Lohr, DC, CFSA', profile: '/our-team/yaron-lohr-dc-cfsa/', short: 'Dr. Yaron Lohr', role: 'Chiropractor, Clinic Director', image: '/images/team/yaron-lohr.png' },
-  { name: 'Sharan Kaur, DC', profile: '/our-team/sharan-kaur-dc/', short: 'Dr. Sharan Kaur', role: 'Chiropractor', image: '/images/team/sharan-kaur.jpeg' },
-  { name: 'Andrew Kuhn, DC', profile: '/our-team/andrew-kuhn-dc/', short: 'Dr. Andrew Kuhn', role: 'Chiropractor', image: '/images/team/andrew-kuhn.jpeg' },
-  { name: 'Venkat Sethuraman, MD', profile: '/our-team/venkat-sethuraman-md/', short: 'Dr. Venkat Sethuraman', role: 'Spine Surgeon', image: '/images/team/venkat-sethuraman.png' },
+  { name: 'Yaron Lohr, DC, CFSA', profile: '/our-team/yaron-lohr-dc-cfsa/', short: 'Dr. Yaron Lohr', role: 'Chiropractor, Clinic Director', image: '/images/team/yaron-lohr.webp' },
+  { name: 'Sharan Kaur, DC', profile: '/our-team/sharan-kaur-dc/', short: 'Dr. Sharan Kaur', role: 'Chiropractor', image: '/images/team/sharan-kaur.webp' },
+  { name: 'Andrew Kuhn, DC', profile: '/our-team/andrew-kuhn-dc/', short: 'Dr. Andrew Kuhn', role: 'Chiropractor', image: '/images/team/andrew-kuhn.webp' },
+  { name: 'Venkat Sethuraman, MD', profile: '/our-team/venkat-sethuraman-md/', short: 'Dr. Venkat Sethuraman', role: 'Spine Surgeon', image: '/images/team/venkat-sethuraman.webp' },
 ];
 
 export const testimonials = [
@@ -65,7 +65,7 @@ export const blog = [
   { title: 'Functional Neurology: Understanding the Brain, Nervous System, Movement, Balance and Rehabilitation', tag: 'Neurology', image: '/images/services/orthopedics.webp', text: 'How the brain and nervous system shape the way you move, balance and recover.' },
   { title: 'Why Does My Lower Back Hurt When I Stand for More Than 20 Minutes?', tag: 'Back Pain', image: '/images/blog/lower-back.webp', text: 'Common reasons your back complains after standing, and what to do about it.' },
   { title: 'Numbness, Tingling or Burning Down Your Leg? Sciatica vs. Herniated Disc Explained', tag: 'Nerve Pain', image: '/images/blog/sciatica-disc.webp', text: 'Two problems that feel alike but are not the same, explained in plain words.' },
-  { title: 'The Peptide Revolution: Are We Running a Giant Human Experiment?', tag: 'Wellness', image: '/images/blog/peptides.jpg', text: 'A careful look at the growing interest in peptides and what to ask first.' },
+  { title: 'The Peptide Revolution: Are We Running a Giant Human Experiment?', tag: 'Wellness', image: '/images/blog/peptides.webp', text: 'A careful look at the growing interest in peptides and what to ask first.' },
 ];
 export const blogUrl = 'https://postureperfectwellnesscenter.com/blog/';
 

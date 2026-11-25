@@ -5,12 +5,12 @@ export const img = {
   // Until they are added, the site uses the temporary photos from the old website.
   hero: ['/images/stock/hero.jpg', '/images/old/bg-1.webp'],
   about: '/images/clinic/about.webp',
-  aboutAccent: '/images/clinic/clinic-1.png',
+  aboutAccent: '/images/clinic/clinic-1.webp',
   approach: ['/images/stock/approach.jpg', '/images/old/bg-2.webp'],
   phases: ['/images/stock/phases.jpg', '/images/old/bg-3.webp'],
   specialties: ['/images/stock/specialties.jpg', '/images/clinic/specialties.webp'],
   reviews: ['/images/stock/reviews.jpg', '/images/old/bg-2.webp'],
   cta: ['/images/stock/cta.jpg', '/images/old/bg-4.webp'],
-  book: '/images/clinic/book-cover.jpg',
+  book: '/images/clinic/book-cover.webp',
   logo: '/images/PPWC-Logo-Transparent.webp',
 };
