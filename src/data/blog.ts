@@ -5,14 +5,14 @@
 export const oldSite = 'https://postureperfectwellnesscenter.com';
 const up = (p: string) => `${oldSite}/wp-content/uploads/${p}`;
 
-export const tags = ['Back pain', 'Sciatica', 'Neck & posture', 'Wellness', 'Injury & recovery', 'Pain management', 'Kids & family'] as const;
-export type Tag = (typeof tags)[number];
+export const allTags = ['Back pain', 'Sciatica', 'Neck & posture', 'Wellness', 'Injury & recovery', 'Pain management', 'Kids & family'] as const;
+export type Tag = (typeof allTags)[number];
 
 export type PostMeta = { slug: string; title: string; date: string; excerpt: string; tag: Tag; image: string; author?: string };
 
 const P = (slug: string, date: string, title: string, tag: Tag, excerpt: string, image = ''): PostMeta => ({ slug, date, title, tag, excerpt, image });
 
-export const posts: PostMeta[] = [
+const allPosts: PostMeta[] = [
   P('functional-neurology-understanding-the-brain-nervous-system-movement-balance-and-rehabilitation', '2026-10-14', 'Functional Neurology: Understanding the Brain, Nervous System, Movement, Balance and Rehabilitation', 'Wellness', 'The nervous system influences balance, movement, eye control and much more. A look at how it can be trained.', up('2026/10/pexels-shvetsa-4226216-scaled.jpg')),
   P('sciatica-vs-herniated-disc-leg-numbness-tingling', '2026-09-21', 'Numbness, Tingling or Burning Down Your Leg? Sciatica vs. Herniated Disc Explained', 'Sciatica', 'Two problems that feel alike but are not the same, explained in plain words.', '/images/blog/sciatica-disc.webp'),
   P('lower-back-pain-standing-too-long', '2026-09-21', 'Why Does My Lower Back Hurt When I Stand for More Than 20 Minutes?', 'Back pain', 'Common reasons your back complains after standing, and what to do about it.', '/images/blog/lower-back.webp'),
@@ -55,6 +55,12 @@ export const posts: PostMeta[] = [
   P('dallas-auto-accident-chiropractor-whiplash-injury-recovery', '2026-04-18', 'Dallas Auto Accident Chiropractor: Whiplash & Injury Recovery', 'Injury & recovery', 'Why whiplash and other crash injuries deserve an early exam.', up('2026/04/2832104.png')),
   P('three-simple-movements-you-can-do-every-day-to-protect-your-spine-and-joints', '2026-04-18', 'Three Simple Movements You Can Do Every Day to Protect Your Spine and Joints', 'Back pain', 'Short, simple moves that fit into any day.', up('2026/04/2832104.png')),
 ];
+
+// The old WordPress pages no longer exist on this domain, so only posts that have a full
+// article file in src/data/posts/ are listed. Add a new .md file there and its card appears.
+const have = new Set(Object.keys(import.meta.glob('./posts/*.md')).map((p) => p.split('/').pop()!.replace('.md', '')));
+export const posts: PostMeta[] = allPosts.filter((p) => have.has(p.slug));
+export const tags = allTags.filter((t) => posts.some((p) => p.tag === t));
 
 export const sortedPosts = [...posts].sort((a, b) => b.date.localeCompare(a.date));
 
