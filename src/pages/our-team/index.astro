@@ -16,7 +16,7 @@ const jsonLd = {
   name: title,
   description: desc,
   url: new URL('/our-team/', Astro.site).toString(),
-  hasPart: providers.map((p) => ({ '@type': 'Physician', name: p.short, url: new URL(`/our-team/${p.slug}/`, Astro.site).toString() })),
+  hasPart: providers.map((p) => ({ '@type': /\bMD\b/.test(p.name) ? 'Physician' : 'Person', name: p.short, url: new URL(`/our-team/${p.slug}/`, Astro.site).toString() })),
 };
 ---
 

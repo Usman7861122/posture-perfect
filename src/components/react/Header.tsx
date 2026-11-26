@@ -108,7 +108,7 @@ function Panel({ k, close }: { k: Key; close: () => void }) {
 
   if (k === 'team')
     return (
-      <Frame eyebrow="Our providers" title="Experts. One plan." text="Chiropractic physicians, medical providers and orthopedic spine expertise." cta={{ label: 'All providers', href: '/our-team/' }} onNavigate={close}>
+      <Frame eyebrow="Our providers" title="Experts. One plan." text="Chiropractic doctors, medical providers and orthopedic spine expertise." cta={{ label: 'All providers', href: '/our-team/' }} onNavigate={close}>
         <Heading>Providers</Heading>
         <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
           {team.map((m) => (

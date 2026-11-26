@@ -15,7 +15,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
     {
-      '@type': 'Physician',
+      '@type': /\bMD\b/.test(p.name) ? 'Physician' : 'Person',
       name: p.short,
       honorificSuffix: p.name.split(', ').slice(1).join(', '),
       jobTitle: p.role,
