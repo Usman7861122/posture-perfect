@@ -83,3 +83,6 @@ Patients across Dallas, McKinney, and DFW trust Posture Perfect because we focus
 Desk work itself isn’t the problem. The problem is staying in the same stressed position for hours every day without correction. Your body adapts to everything you repeatedly do. The good news? It can adapt in positive ways too.
 
 *Alleviate Pain. Restore Function. Optimize Health. — Dr. Yaron Lohr*
+
+
+Thinking about a standing desk? Read our companion guide, [Are Standing Desks Better for Your Back?](/blog/standing-desks-back-pain-dallas-mckinney/)

@@ -17,6 +17,8 @@ const slug = Astro.params.slug!;
 const meta = posts.find((p) => p.slug === slug);
 const image = meta?.image || (fm.oldImage ? `${oldSite}/wp-content/uploads/${fm.oldImage}` : '');
 const date = String(fm.date).slice(0, 10);
+const modified = String(fm.modified || fm.date).slice(0, 10);
+const absImage = image ? new URL(image, Astro.site).toString() : '';
 const url = new URL(`/blog/${slug}/`, Astro.site).toString();
 const related = posts.filter((p) => p.slug !== slug && p.tag === fm.tag).slice(0, 3);
 const same = (related.length ? related : posts.filter((p) => p.slug !== slug)).slice(0, 3);
@@ -30,10 +32,11 @@ const jsonLd = {
       headline: fm.title,
       description: fm.excerpt,
       datePublished: date,
-      author: { '@type': 'Person', name: fm.author },
-      publisher: { '@type': 'Organization', name: site.name },
-      mainEntityOfPage: url,
-      ...(image ? { image } : {}),
+      dateModified: modified,
+      ...(fm.author ? { author: { '@type': 'Person', name: fm.author } } : {}),
+      publisher: { '@type': 'Organization', name: site.name, url: new URL('/', Astro.site).toString() },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+      ...(absImage ? { image: absImage } : {}),
     },
     {
       '@type': 'BreadcrumbList',
@@ -47,7 +50,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={fm.title} description={fm.excerpt} jsonLd={jsonLd}>
+<BaseLayout title={fm.seoTitle || fm.title} description={fm.excerpt} jsonLd={jsonLd} {...(image.startsWith('/') ? { image, imageAlt: fm.imageAlt || fm.title } : {})}>
   <section class="on-dark grain relative isolate overflow-hidden bg-forest-950 pb-14 pt-36 text-ivory-50 md:pb-20 md:pt-44">
     <div aria-hidden="true" class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(140,139,168,0.18),transparent_55%)]"></div>
     <div class="container-page max-w-4xl">
@@ -61,13 +64,13 @@ const jsonLd = {
       <p class="eyebrow mt-10">{fm.tag}</p>
       <h1 class="mt-4 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.08] text-ivory-50">{fm.title}</h1>
       <span aria-hidden="true" class="my-6 block h-px w-32 bg-gradient-to-r from-gold-400 to-transparent"></span>
-      <p class="text-sm text-ivory-200/80">By {fm.author} · <time datetime={date}>{fmtDate(date)}</time></p>
+      <p class="text-sm text-ivory-200/80">{fm.author && <>By {fm.author} · </>}<time datetime={date}>{fmtDate(date)}</time></p>
     </div>
   </section>
 
   <article class="section">
     <div class="container-page max-w-3xl">
-      {image && <img src={image} alt="" width="1200" height="675" class="mb-12 aspect-[16/9] w-full object-cover" onerror="this.style.display='none'" />}
+      {image && <img src={image} alt={fm.imageAlt || ''} width="1200" height="675" class="mb-12 aspect-[16/9] w-full object-cover" onerror="this.style.display='none'" />}
       <div class="post-body"><Content /></div>
 
       <aside class="mt-14 border border-gold-500/40 bg-ivory-100 p-8 text-center">

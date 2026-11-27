@@ -13,6 +13,7 @@ export type PostMeta = { slug: string; title: string; date: string; excerpt: str
 const P = (slug: string, date: string, title: string, tag: Tag, excerpt: string, image = ''): PostMeta => ({ slug, date, title, tag, excerpt, image });
 
 const allPosts: PostMeta[] = [
+  P('standing-desks-back-pain-dallas-mckinney', '2026-11-27', 'Are Standing Desks Better for Your Back? A Practical Guide', 'Wellness', 'Standing desks can help you change positions, but standing all day is not the answer. Learn what research says and how to set up your desk.', '/images/blog/standing-desk.webp'),
   P('functional-neurology-understanding-the-brain-nervous-system-movement-balance-and-rehabilitation', '2026-10-14', 'Functional Neurology: Understanding the Brain, Nervous System, Movement, Balance and Rehabilitation', 'Wellness', 'The nervous system influences balance, movement, eye control and much more. A look at how it can be trained.', up('2026/10/pexels-shvetsa-4226216-scaled.jpg')),
   P('sciatica-vs-herniated-disc-leg-numbness-tingling', '2026-09-21', 'Numbness, Tingling or Burning Down Your Leg? Sciatica vs. Herniated Disc Explained', 'Sciatica', 'Two problems that feel alike but are not the same, explained in plain words.', '/images/blog/sciatica-disc.webp'),
   P('lower-back-pain-standing-too-long', '2026-09-21', 'Why Does My Lower Back Hurt When I Stand for More Than 20 Minutes?', 'Back pain', 'Common reasons your back complains after standing, and what to do about it.', '/images/blog/lower-back.webp'),
